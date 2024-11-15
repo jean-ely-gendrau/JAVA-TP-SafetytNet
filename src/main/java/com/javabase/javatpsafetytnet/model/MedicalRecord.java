@@ -2,7 +2,7 @@ package com.javabase.javatpsafetytnet.model;
 
 import java.util.List;
 
-public class Medicalrecord {
+public class MedicalRecord {
 
     private String firstName;
     private String lastName;
@@ -11,10 +11,10 @@ public class Medicalrecord {
     List<String> medications;
     List<String> allergies;
 
-    public Medicalrecord() {
+    public MedicalRecord() {
     }
 
-    public Medicalrecord(String firstName, String lastName, String birthday, List<String> medications, List<String> allergies) {
+    public MedicalRecord(String firstName, String lastName, String birthday, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;

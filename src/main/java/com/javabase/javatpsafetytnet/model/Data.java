@@ -6,16 +6,16 @@ public class Data {
 
     private List<Personne> personnes;
     private List<Firestation> firestations;
-    private List<Medicalrecord> medicalrecords;
+    private List<MedicalRecord> medicalRecords;
 
     public Data() {
     }
 
 
-    public Data(List<Personne> personnes, List<Firestation> firestations, List<Medicalrecord> medicalrecords) {
+    public Data(List<Personne> personnes, List<Firestation> firestations, List<MedicalRecord> medicalRecords) {
         this.personnes = personnes;
         this.firestations = firestations;
-        this.medicalrecords = medicalrecords;
+        this.medicalRecords = medicalRecords;
     }
 
     // Getter
@@ -29,8 +29,8 @@ public class Data {
         return firestations;
     }
 
-    public List<Medicalrecord> getMedicalrecords() {
-        return medicalrecords;
+    public List<MedicalRecord> getMedicalrecords() {
+        return medicalRecords;
     }
 
     // Setter
@@ -44,7 +44,7 @@ public class Data {
         this.firestations = firestations;
     }
 
-    public void setMedicalrecords(List<Medicalrecord> medicalrecords) {
-        this.medicalrecords = medicalrecords;
+    public void setMedicalrecords(List<MedicalRecord> medicalRecords) {
+        this.medicalRecords = medicalRecords;
     }
 }
