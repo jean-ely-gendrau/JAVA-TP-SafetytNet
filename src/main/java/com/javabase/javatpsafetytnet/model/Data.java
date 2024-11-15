@@ -1,5 +1,8 @@
 package com.javabase.javatpsafetytnet.model;
 
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+
+import java.net.URL;
 import java.util.List;
 
 public class Data {
@@ -18,8 +21,13 @@ public class Data {
         this.medicalRecords = medicalRecords;
     }
 
-    // Getter
+    // Static
+    public static <T> T get(URL url, Class<T> type) {
+        Jackson2ObjectMapperBuilderCustomizer mapper = new ObjectMapper();
+        return mapper.readValue(url, type);
+    }
 
+    // Getter
 
     public List<Personne> getPersonnes() {
         return personnes;
