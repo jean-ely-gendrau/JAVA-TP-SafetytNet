@@ -5,7 +5,7 @@ import java.util.List;
 public class Medicalrecord {
 
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String birthday;
 
     List<String> medications;
@@ -14,23 +14,33 @@ public class Medicalrecord {
     public Medicalrecord() {
     }
 
-    public Medicalrecord(String firstName, String lastname, String birthday, List<String> medications, List<String> allergies) {
+    public Medicalrecord(String firstName, String lastName, String birthday, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.birthday = birthday;
         this.medications = medications;
         this.allergies = allergies;
     }
 
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "firstName='" + firstName +
+                "', lastName='" + lastName +
+                "', birthday='" + birthday +
+                "', medications='" + medications +
+                "', allergies='" + allergies +
+                "'}";
+    }
+    
     // Getter
-
-
+    
     public String getFirstName() {
         return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getlastName() {
+        return lastName;
     }
 
     public String getBirthday() {
@@ -47,7 +57,24 @@ public class Medicalrecord {
 
     // Setter
 
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setMedications(List<String> medications) {
+        this.medications = medications;
+    }
+
+    public void setAllergies(List<String> allergies) {
+        this.allergies = allergies;
     }
 }
