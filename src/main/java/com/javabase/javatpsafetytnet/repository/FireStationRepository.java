@@ -33,7 +33,7 @@ public class FireStationRepository {
 
     }
 
-    public List<String> findByAddress(String address){
+    public List<String> findAllByAddress(String address){
         return dataRepository
                 .findAllFireStation()
                 .stream()

@@ -5,12 +5,15 @@ import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonFireAlertDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsFireStationDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FireStationService {
@@ -60,18 +63,28 @@ public class FireStationService {
      * @return List PersonFireAlertDTO
      */
    public List<PersonsFireStationDTO> getAllPersonsByAddress(String address){
-       List<String> fireStation = fireStationRepository.findByAddress(address);
-       //List<MedicalRecord> medicalRecords = medicalRecordRepository.
-//    List<Person> personList = personRepository.findAllByAddress(address)
-//            .stream()
-//            .map(mapper-> new PersonFireAlertDTO(
-//                    mapper.getLastName(),
-//                    mapper.getPhone(),
-//
-//            ));;
+       List<String> fireStation = fireStationRepository.findAllByAddress(address);
+
+        Stream<PersonFireAlertDTO> personList = personRepository.findAllByAddress(address)
+                .stream()
+                .map(mapper-> new PersonFireAlertDTO(
+                        mapper.getLastName(),
+                        mapper.getPhone(),
+                        medicalRecordRepository.findAllByLastName(mapper.getLastName())
+                                .stream()
+                                .map(MedicalRecord::getBirthdate)
+                                .toString(),
+                        medicalRecordRepository.findAllByLastName(mapper.getLastName())
+                                .stream()
+                                .map(mapperMRR -> new MedicalHistoryDTO(
+                                        mapperMRR.getMedications(),
+                                        mapperMRR.getAllergies()
+                                        )
+                                ).toList()
+                ));
 
 
 
-    return new PersonsFireStationDTO();
+    return new PersonsFireStationDTO(fireStation, personList);
    }
 }
