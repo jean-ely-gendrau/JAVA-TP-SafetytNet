@@ -1,10 +1,10 @@
-package com.javabase.javatpsafetytnet.service;
+package com.javabase.javatpsafetytnet.repository;
 
 import com.javabase.javatpsafetytnet.model.Data;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class DataService {
+@Repository
+public class DataRepository {
 
     private Data data;
 
@@ -13,9 +13,9 @@ public class DataService {
         return data;
     }
 
-
     //Setter
     public void setData(Data data) {
         this.data = data;
     }
+
 }
