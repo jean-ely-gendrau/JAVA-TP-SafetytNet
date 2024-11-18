@@ -1,14 +1,14 @@
 package com.javabase.javatpsafetytnet.model;
 
-public class Firestation {
+public class FireStation {
 
     private String address;
     private String station;
 
-    public Firestation() {
+    public FireStation() {
     }
 
-    public Firestation(String address, String station) {
+    public FireStation(String address, String station) {
         this.address = address;
         this.station = station;
     }

@@ -23,6 +23,7 @@ public class PersonRepository {
                 .filter( person ->
                         Objects.equals(person.getCity(), city)
                 ).map(person -> person.getEmail())
+                .distinct()
                 .collect(Collectors.toList());
     }
 
