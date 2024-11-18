@@ -1,8 +1,11 @@
 package com.javabase.javatpsafetytnet.service;
 
+import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
+import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import com.javabase.javatpsafetytnet.service.dto.PersonFireAlertDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsFireStationDTO;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ public class FireStationService {
      */
     private final FireStationRepository fireStationRepository;
     private final PersonRepository personRepository;
+    private final MedicalRecordRepository medicalRecordRepository;
 
     /**
      * Constructor
@@ -25,9 +29,10 @@ public class FireStationService {
      * @param fireStationRepository
      * @param personRepository
      */
-    public FireStationService(FireStationRepository fireStationRepository, PersonRepository personRepository) {
+    public FireStationService(FireStationRepository fireStationRepository, PersonRepository personRepository, MedicalRecordRepository medicalRecordRepository) {
         this.fireStationRepository = fireStationRepository;
         this.personRepository = personRepository;
+        this.medicalRecordRepository = medicalRecordRepository;
     }
 
     /**
@@ -55,8 +60,18 @@ public class FireStationService {
      * @return List PersonFireAlertDTO
      */
    public List<PersonsFireStationDTO> getAllPersonsByAddress(String address){
-    List<Person> personList = personRepository.findAllByAddress(address);
-    List<String> fireStation = fireStationRepository.findByAddress(address);
-//    return new PersonsFireStationDTO();
+       List<String> fireStation = fireStationRepository.findByAddress(address);
+       //List<MedicalRecord> medicalRecords = medicalRecordRepository.
+//    List<Person> personList = personRepository.findAllByAddress(address)
+//            .stream()
+//            .map(mapper-> new PersonFireAlertDTO(
+//                    mapper.getLastName(),
+//                    mapper.getPhone(),
+//
+//            ));;
+
+
+
+    return new PersonsFireStationDTO();
    }
 }
