@@ -32,4 +32,13 @@ public class FireStationRepository {
                 .toList();
 
     }
+
+    public List<String> findByAddress(String address){
+        return dataRepository
+                .findAllFireStation()
+                .stream()
+                .filter(station -> Objects.equals(station.getAddress(), address))
+                .map(FireStation::getStation)
+                .toList();
+    }
 }

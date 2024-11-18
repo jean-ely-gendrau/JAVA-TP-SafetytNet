@@ -56,7 +56,7 @@ public class FireStationService {
      */
    public List<PersonsFireStationDTO> getAllPersonsByAddress(String address){
     List<Person> personList = personRepository.findAllByAddress(address);
-
-
+    List<String> fireStation = fireStationRepository.findByAddress(address);
+//    return new PersonsFireStationDTO();
    }
 }
