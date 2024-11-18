@@ -23,11 +23,9 @@ public class InitDataConfig implements IJsonUtils {
         this.dataService = dataService;
     }
 
-
-    // Bean of command runner mapping data Json with librarie Jackson
+    // Bean of command runner mapping data Json with library Jackson
     @Bean
     public CommandLineRunner runner(){
-        String s = "data.json";
 
         return args -> {
             // Load Data
