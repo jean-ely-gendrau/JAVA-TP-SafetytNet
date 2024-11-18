@@ -1,36 +1,31 @@
 package com.javabase.javatpsafetytnet.model;
 
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-
-import java.net.URL;
 import java.util.List;
+
 
 public class Data {
 
-    private List<Personne> personnes;
+    private List<Person> persons;
     private List<Firestation> firestations;
-    private List<MedicalRecord> medicalRecords;
-
-    public Data() {
-    }
+    private List<MedicalRecord> medicalrecords;
 
 
-    public Data(List<Personne> personnes, List<Firestation> firestations, List<MedicalRecord> medicalRecords) {
-        this.personnes = personnes;
-        this.firestations = firestations;
-        this.medicalRecords = medicalRecords;
-    }
+//    public Data(List<Person> persons, List<Firestation> firestations, List<MedicalRecord> medicalrecords) {
+//        this.persons = persons;
+//        this.firestations = firestations;
+//        this.medicalrecords = medicalrecords;
+//    }
 
-    // Static
-    public static <T> T get(URL url, Class<T> type) {
-        Jackson2ObjectMapperBuilderCustomizer mapper = new ObjectMapper();
-        return mapper.readValue(url, type);
-    }
+//    // Static
+//    public static <T> T get(URL url, Class<T> type) {
+//        Jackson2ObjectMapperBuilderCustomizer mapper = new ObjectMapper();
+//        return mapper.readValue(url, type);
+//    }
 
     // Getter
 
-    public List<Personne> getPersonnes() {
-        return personnes;
+    public List<Person> getPersons() {
+        return persons;
     }
 
     public List<Firestation> getFirestations() {
@@ -38,21 +33,21 @@ public class Data {
     }
 
     public List<MedicalRecord> getMedicalrecords() {
-        return medicalRecords;
+        return medicalrecords;
     }
 
     // Setter
 
 
-    public void setPersonnes(List<Personne> personnes) {
-        this.personnes = personnes;
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 
     public void setFirestations(List<Firestation> firestations) {
         this.firestations = firestations;
     }
 
-    public void setMedicalrecords(List<MedicalRecord> medicalRecords) {
-        this.medicalRecords = medicalRecords;
+    public void setMedicalrecords(List<MedicalRecord> medicalrecords) {
+        this.medicalrecords = medicalrecords;
     }
 }

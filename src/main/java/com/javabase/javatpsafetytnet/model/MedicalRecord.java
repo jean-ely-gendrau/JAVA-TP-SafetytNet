@@ -6,7 +6,7 @@ public class MedicalRecord {
 
     private String firstName;
     private String lastName;
-    private String birthday;
+    private String birthdate;
 
     List<String> medications;
     List<String> allergies;
@@ -14,27 +14,27 @@ public class MedicalRecord {
     public MedicalRecord() {
     }
 
-    public MedicalRecord(String firstName, String lastName, String birthday, List<String> medications, List<String> allergies) {
+    public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
         this.medications = medications;
         this.allergies = allergies;
     }
 
     @Override
     public String toString() {
-        return "Personne{" +
+        return "Person{" +
                 "firstName='" + firstName +
                 "', lastName='" + lastName +
-                "', birthday='" + birthday +
+                "', birthdate='" + birthdate +
                 "', medications='" + medications +
                 "', allergies='" + allergies +
                 "'}";
     }
-    
+
     // Getter
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -43,8 +43,8 @@ public class MedicalRecord {
         return lastName;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getbirthdate() {
+        return birthdate;
     }
 
     public List<String> getMedications() {
@@ -66,8 +66,8 @@ public class MedicalRecord {
         this.lastName = lastName;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setbirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
     public void setMedications(List<String> medications) {

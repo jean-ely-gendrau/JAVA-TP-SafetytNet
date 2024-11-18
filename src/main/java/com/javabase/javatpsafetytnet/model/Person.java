@@ -1,6 +1,6 @@
 package com.javabase.javatpsafetytnet.model;
 
-public class Personne {
+public class Person {
 
     private String firstName;
     private String lastName;
@@ -10,10 +10,10 @@ public class Personne {
     private String phone;
     private String email;
 
-    public Personne() {
+    public Person() {
     }
 
-    public Personne(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
+    public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -25,7 +25,7 @@ public class Personne {
 
     @Override
     public String toString() {
-        return "Personne{" +
+        return "Person{" +
                 "firstName='" + firstName +
                 "', lastName='" + lastName +
                 "', address='" + address +
