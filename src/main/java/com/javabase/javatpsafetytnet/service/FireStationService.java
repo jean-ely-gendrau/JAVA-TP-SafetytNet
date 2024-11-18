@@ -3,6 +3,7 @@ package com.javabase.javatpsafetytnet.service;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import com.javabase.javatpsafetytnet.service.dto.PersonFireAlertDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,5 +46,15 @@ public class FireStationService {
                 .map(Person::getPhone)
                 .distinct()
                 .collect(Collectors.toList());
+   }
+
+    /**
+     * getAllPersonsByAddress
+     *
+     * @param address
+     * @return List PersonFireAlertDTO
+     */
+   public List<PersonFireAlertDTO> getAllPersonsByAddress(String address){
+
    }
 }
