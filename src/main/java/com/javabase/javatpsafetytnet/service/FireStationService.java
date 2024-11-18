@@ -3,7 +3,7 @@ package com.javabase.javatpsafetytnet.service;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
-import com.javabase.javatpsafetytnet.service.dto.PersonFireAlertDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonsFireStationDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class FireStationService {
      * @param address
      * @return List PersonFireAlertDTO
      */
-   public List<PersonFireAlertDTO> getAllPersonsByAddress(String address){
+   public List<PersonsFireStationDTO> getAllPersonsByAddress(String address){
     List<Person> personList = personRepository.findAllByAddress(address);
 
 
