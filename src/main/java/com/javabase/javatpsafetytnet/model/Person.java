@@ -1,5 +1,9 @@
 package com.javabase.javatpsafetytnet.model;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 public class Person {
 
     private String firstName;
@@ -34,6 +38,29 @@ public class Person {
                 "', phone='" + phone +
                 "', email='" + email +
                 "'}";
+    }
+
+    // Method
+
+    /**
+     * static getAge
+     *
+     * @param birthdate
+     * @return int
+     */
+    public static double getAge(String birthdate){
+        LocalDate localDateNow = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+        return Period.between(LocalDate.parse(birthdate, formatter), localDateNow).getYears();
+    }
+
+    public static  boolean isAdult(String birthdate){
+        LocalDate localDateNow = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+
+        return Period.between(LocalDate.parse(birthdate, formatter), localDateNow).getYears() >= 18;
     }
 
     // Getter

@@ -18,23 +18,18 @@ public class FireStationRepository {
         this.dataRepository = dataRepository;
     }
 
+    public List<FireStation> findAll(){
+        return dataRepository
+                .findAllFireStation();
+    }
+
     public List<String> findByStation(String stationNumber){
-        List<String> stationAddress = dataRepository
-                .getData()
-                .getFirestations()
+        return dataRepository
+                .findAllFireStation()
                 .stream()
                 .filter(station -> Objects.equals(station.getStation(), stationNumber))
                 .map(FireStation::getAddress)
                 .toList();
-
-        return dataRepository
-                .getData()
-                .getPersons()
-                .stream()
-                .filter(persone-> stationAddress.contains(persone.getAddress()))
-                .map(Person::getPhone)
-                .distinct()
-                .collect(Collectors.toList());
 
     }
 }

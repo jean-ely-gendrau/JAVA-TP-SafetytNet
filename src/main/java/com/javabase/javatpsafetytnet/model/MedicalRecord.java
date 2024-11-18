@@ -39,11 +39,11 @@ public class MedicalRecord {
         return firstName;
     }
 
-    public String getlastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public String getbirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
@@ -66,7 +66,7 @@ public class MedicalRecord {
         this.lastName = lastName;
     }
 
-    public void setbirthdate(String birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
