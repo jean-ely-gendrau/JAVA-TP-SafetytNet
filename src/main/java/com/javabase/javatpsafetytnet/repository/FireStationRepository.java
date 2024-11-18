@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -33,12 +34,19 @@ public class FireStationRepository {
 
     }
 
-    public List<String> findAllByAddress(String address){
+    public Optional<FireStation> findByAddress(String address){
+    return dataRepository
+            .findAllFireStation()
+            .stream()
+            .filter(fireStation -> Objects.equals(fireStation.getAddress(), address))
+            .findFirst();
+    }
+
+    public List<FireStation> findAllByAddress(String address){
         return dataRepository
                 .findAllFireStation()
                 .stream()
                 .filter(station -> Objects.equals(station.getAddress(), address))
-                .map(FireStation::getStation)
-                .toList();
+                .collect(Collectors.toList());
     }
 }
