@@ -5,6 +5,8 @@ import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class MedicalRecordRepository {
@@ -21,12 +23,16 @@ public class MedicalRecordRepository {
     }
 
     /**
-     * findAllByAddress
+     * findAllByLastName
      *
-     * @param address
+     * @param lastName
      * @return List MedicalRecord
      */
-    public List<MedicalRecord> findAllByAddress(String address){
-
+    public List<MedicalRecord> findAllByLastName(String lastName){
+        return dataRepository
+                .findAllMedicalRecord()
+                .stream()
+                .filter(medicalRcord -> Objects.equals(medicalRcord.getLastName(), lastName))
+                .collect(Collectors.toList());
     }
 }
