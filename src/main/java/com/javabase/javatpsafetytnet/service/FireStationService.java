@@ -55,6 +55,8 @@ public class FireStationService {
      * @return List PersonFireAlertDTO
      */
    public List<PersonFireAlertDTO> getAllPersonsByAddress(String address){
+    List<Person> personList = personRepository.findAllByAddress(address);
+
 
    }
 }
