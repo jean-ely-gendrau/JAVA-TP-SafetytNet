@@ -21,4 +21,9 @@ public class FireStationController {
         return fireStationService.getNumberPhoneByStation(stationNumber);
     }
 
+    @GetMapping("/fire")
+    public List<PersonFireAlertDTO> fireAlert(@RequestParam(name = "address") String address){
+        return fireStationService.getAllPersonsByAddress(address);
+    }
+
 }
