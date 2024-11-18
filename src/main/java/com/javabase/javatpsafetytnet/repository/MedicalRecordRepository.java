@@ -20,4 +20,13 @@ public class MedicalRecordRepository {
                 .findAllMedicalRecord();
     }
 
+    /**
+     * findAllByAddress
+     *
+     * @param address
+     * @return List MedicalRecord
+     */
+    public List<MedicalRecord> findAllByAddress(String address){
+
+    }
 }
