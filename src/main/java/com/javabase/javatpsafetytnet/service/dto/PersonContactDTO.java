@@ -2,7 +2,7 @@ package com.javabase.javatpsafetytnet.service.dto;
 
 import java.util.List;
 
-public class PersonFireAlertDTO {
+public class PersonContactDTO {
 
     private String lastName;
     private String phone;
@@ -10,7 +10,7 @@ public class PersonFireAlertDTO {
 
     private List<MedicalHistoryDTO> medicalHistoryList;
 
-    public PersonFireAlertDTO(String lastName, String phone, String age, List<MedicalHistoryDTO> medicalHistoryList) {
+    public PersonContactDTO(String lastName, String phone, String age, List<MedicalHistoryDTO> medicalHistoryList) {
         this.lastName = lastName;
         this.phone = phone;
         this.age = age;

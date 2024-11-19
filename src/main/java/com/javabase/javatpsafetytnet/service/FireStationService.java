@@ -1,21 +1,18 @@
 package com.javabase.javatpsafetytnet.service;
 
 import com.javabase.javatpsafetytnet.model.FireStation;
-import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
-import com.javabase.javatpsafetytnet.service.dto.PersonFireAlertDTO;
-import com.javabase.javatpsafetytnet.service.dto.PersonsFireStationDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonContactDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class FireStationService {
@@ -63,12 +60,12 @@ public class FireStationService {
      * getAllPersonsByAddress
      *
      * @param address
-     * @return PersonFireAlertDTO
+     * @return PersonContactDTO
      */
-    public PersonsFireStationDTO getAllPersonsByAddress(String address) {
+    public PersonsByStationDTO getAllPersonsByAddress(String address) {
         Optional<FireStation> fireStation = fireStationRepository.findByAddress(address);
 
-        List<PersonFireAlertDTO> personList = personRepository.findAllByAddress(address)
+        List<PersonContactDTO> personList = personRepository.findAllByAddress(address)
                 .stream()
                 .map(mapper -> {
                             String dateString = medicalRecordRepository
@@ -76,7 +73,7 @@ public class FireStationService {
                                     .get(0)
                                     .getBirthdate();
 
-                            return new PersonFireAlertDTO(
+                            return new PersonContactDTO(
                                     mapper.getLastName(),
                                     mapper.getPhone(),
                                     String.format("%.0f", Person.getAge(dateString)),
@@ -93,6 +90,6 @@ public class FireStationService {
                 .collect(Collectors.toList());
 
 
-        return new PersonsFireStationDTO(fireStation.get().getStation(), personList);
+        return new PersonsByStationDTO(fireStation.get().getStation(), address,  personList);
     }
 }

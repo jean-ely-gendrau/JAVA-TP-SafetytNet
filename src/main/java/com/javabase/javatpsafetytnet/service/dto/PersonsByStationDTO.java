@@ -2,13 +2,15 @@ package com.javabase.javatpsafetytnet.service.dto;
 
 import java.util.List;
 
-public class PersonsFireStationDTO {
+public class PersonsByStationDTO {
 
     private String firestation;
-    private List<PersonFireAlertDTO> personFireAlertList;
+    private String address;
+    private List<PersonContactDTO> personFireAlertList;
 
-    public PersonsFireStationDTO(String firestation, List<PersonFireAlertDTO> personFireAlertList) {
+    public PersonsByStationDTO(String firestation, String address, List<PersonContactDTO> personFireAlertList) {
         this.firestation = firestation;
+        this.address = address;
         this.personFireAlertList = personFireAlertList;
     }
 
@@ -18,8 +20,12 @@ public class PersonsFireStationDTO {
         return firestation;
     }
 
-    public List<PersonFireAlertDTO> getPersonFireAlertList() {
+    public List<PersonContactDTO> getPersonFireAlertList() {
         return personFireAlertList;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     // Setter
@@ -28,7 +34,11 @@ public class PersonsFireStationDTO {
         this.firestation = firestation;
     }
 
-    public void setPersonFireAlertList(List<PersonFireAlertDTO> personFireAlertList) {
+    public void setPersonFireAlertList(List<PersonContactDTO> personFireAlertList) {
         this.personFireAlertList = personFireAlertList;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
