@@ -1,5 +1,6 @@
 package com.javabase.javatpsafetytnet.service;
 
+import com.javabase.javatpsafetytnet.model.FireStation;
 import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,51 +42,57 @@ public class FireStationService {
 
     /**
      * getNumberPhoneByStation
+     *
      * @param stationNumber
      * @return List String
      */
-    public List<String> getNumberPhoneByStation(String stationNumber){
+    public List<String> getNumberPhoneByStation(String stationNumber) {
         // Find All Station match with stationNumber params
         List<String> stationAddress = fireStationRepository.findByStation(stationNumber);
 
         // Return all Phone Number match with all stationAddress List
         return personRepository.findAll()
                 .stream()
-                .filter(persone-> stationAddress.contains(persone.getAddress()))
+                .filter(persone -> stationAddress.contains(persone.getAddress()))
                 .map(Person::getPhone)
                 .distinct()
                 .collect(Collectors.toList());
-   }
+    }
 
     /**
      * getAllPersonsByAddress
      *
      * @param address
-     * @return List PersonFireAlertDTO
+     * @return PersonFireAlertDTO
      */
-   public List<PersonsFireStationDTO> getAllPersonsByAddress(String address){
-       List<String> fireStation = fireStationRepository.findAllByAddress(address);
+    public PersonsFireStationDTO getAllPersonsByAddress(String address) {
+        Optional<FireStation> fireStation = fireStationRepository.findByAddress(address);
 
-        Stream<PersonFireAlertDTO> personList = personRepository.findAllByAddress(address)
+        List<PersonFireAlertDTO> personList = personRepository.findAllByAddress(address)
                 .stream()
-                .map(mapper-> new PersonFireAlertDTO(
-                        mapper.getLastName(),
-                        mapper.getPhone(),
-                        medicalRecordRepository.findAllByLastName(mapper.getLastName())
-                                .stream()
-                                .map(MedicalRecord::getBirthdate)
-                                .toString(),
-                        medicalRecordRepository.findAllByLastName(mapper.getLastName())
-                                .stream()
-                                .map(mapperMRR -> new MedicalHistoryDTO(
-                                        mapperMRR.getMedications(),
-                                        mapperMRR.getAllergies()
-                                        )
-                                ).toList()
-                ));
+                .map(mapper -> {
+                            String dateString = medicalRecordRepository
+                                    .findAllByIdentity(mapper.getLastName(), mapper.getFirstName())
+                                    .get(0)
+                                    .getBirthdate();
+
+                            return new PersonFireAlertDTO(
+                                    mapper.getLastName(),
+                                    mapper.getPhone(),
+                                    String.format("%.0f", Person.getAge(dateString)),
+                                    medicalRecordRepository.findAllByIdentity(mapper.getLastName(), mapper.getFirstName())
+                                            .stream()
+                                            .map(mapperMRR -> new MedicalHistoryDTO(
+                                                            mapperMRR.getMedications(),
+                                                            mapperMRR.getAllergies()
+                                                    )
+                                            ).toList()
+                            );
+                        }
+                )
+                .collect(Collectors.toList());
 
 
-
-    return new PersonsFireStationDTO(fireStation, personList);
-   }
+        return new PersonsFireStationDTO(fireStation.get().getStation(), personList);
+    }
 }

@@ -24,7 +24,7 @@ public class FireStationController {
     }
 
     @GetMapping("/fire")
-    public List<PersonsFireStationDTO> fireAlert(@RequestParam(name = "address") String address){
+    public PersonsFireStationDTO fireAlert(@RequestParam(name = "address") String address){
         return fireStationService.getAllPersonsByAddress(address);
     }
 

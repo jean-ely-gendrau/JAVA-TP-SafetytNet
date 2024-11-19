@@ -17,7 +17,7 @@ public class MedicalRecordRepository {
         this.dataRepository = dataRepository;
     }
 
-    public List<MedicalRecord> findAll(){
+    public List<MedicalRecord> findAll() {
         return dataRepository
                 .findAllMedicalRecord();
     }
@@ -28,11 +28,27 @@ public class MedicalRecordRepository {
      * @param lastName
      * @return List MedicalRecord
      */
-    public List<MedicalRecord> findAllByLastName(String lastName){
+    public List<MedicalRecord> findAllByLastName(String lastName) {
         return dataRepository
                 .findAllMedicalRecord()
                 .stream()
                 .filter(medicalRcord -> Objects.equals(medicalRcord.getLastName(), lastName))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * findAllByIdentity
+     *
+     * @param lastName
+     * @param firstName
+     * @return List MedicalRecord
+     */
+    public List<MedicalRecord> findAllByIdentity(String lastName, String firstName) {
+        return dataRepository
+                .findAllMedicalRecord()
+                .stream()
+                .filter(medicalRecord -> Objects.equals(medicalRecord.getLastName(), lastName))
+                .filter(medicalRecord ->Objects.equals(medicalRecord.getFirstName(), firstName))
                 .collect(Collectors.toList());
     }
 }
