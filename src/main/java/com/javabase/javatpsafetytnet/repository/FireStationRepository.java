@@ -42,11 +42,11 @@ public class FireStationRepository {
             .findFirst();
     }
 
-    public List<FireStation> findAllByAddress(String address){
+    public List<FireStation> findAllByStationNumber(List<String> stationsNumber){
         return dataRepository
                 .findAllFireStation()
                 .stream()
-                .filter(station -> Objects.equals(station.getAddress(), address))
+                .filter(station -> stationsNumber.contains(station.getStation()))
                 .collect(Collectors.toList());
     }
 }
