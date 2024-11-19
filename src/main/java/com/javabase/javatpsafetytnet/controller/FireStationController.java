@@ -29,8 +29,8 @@ public class FireStationController {
     }
 
     @GetMapping("/flood/stations")
-    public List<PersonsByStationDTO> floodStation(@RequestParam(name = "stations") List<String> address){
-        return fireStationService.getAllPersonsByStations(address);
+    public List<PersonsByStationDTO> floodStation(@RequestParam(name = "stations") List<String> stationsNumber){
+        return fireStationService.getAllPersonsByStations(stationsNumber);
     }
 
 }

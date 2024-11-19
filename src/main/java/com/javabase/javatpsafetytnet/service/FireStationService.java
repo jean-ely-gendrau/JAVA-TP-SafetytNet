@@ -92,4 +92,8 @@ public class FireStationService {
 
         return new PersonsByStationDTO(fireStation.get().getStation(), address,  personList);
     }
+
+    public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumberList){
+
+    }
 }
