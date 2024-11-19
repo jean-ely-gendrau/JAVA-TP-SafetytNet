@@ -2,39 +2,21 @@ package com.javabase.javatpsafetytnet.service.dto;
 
 public class FireStationPerson {
 
-    private String fistName;
-    private String lastName;
-    private String address;
-    private String phone;
-
+    private String firestation;
+    private
     private double personMajor;
     private double personMinor;
 
-    public FireStationPerson(String fistName, String lastName, String address, String phone, double personMajor, double personMinor) {
-        this.fistName = fistName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
+    public FireStationPerson(String firestation, double personMajor, double personMinor) {
+        this.firestation = firestation;
         this.personMajor = personMajor;
         this.personMinor = personMinor;
     }
 
     // Getter
 
-    public String getFistName() {
-        return fistName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhone() {
-        return phone;
+    public String getFirestation() {
+        return firestation;
     }
 
     public double getPersonMajor() {
@@ -47,21 +29,8 @@ public class FireStationPerson {
 
     // Setter
 
-
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setFirestation(String firestation) {
+        this.firestation = firestation;
     }
 
     public void setPersonMajor(double personMajor) {

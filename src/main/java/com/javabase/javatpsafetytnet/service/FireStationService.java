@@ -59,12 +59,12 @@ public class FireStationService {
      * getAllPersonsByAddress
      *
      * @param address
-     * @return PersonContactDTO
+     * @return PersonContactMedicalHistoryDTO
      */
     public PersonsByStationDTO getAllPersonsByAddress(String address) {
         Optional<FireStation> fireStation = fireStationRepository.findByAddress(address);
 
-        List<PersonContactDTO> personList = personRepository.findAllByAddress(address)
+        List<PersonContactMedicalHistoryDTO> personList = personRepository.findAllByAddress(address)
                 .stream()
                 .map(mapper -> {
                             String dateString = medicalRecordRepository
@@ -72,7 +72,7 @@ public class FireStationService {
                                     .get(0)
                                     .getBirthdate();
 
-                            return new PersonContactDTO(
+                            return new PersonContactMedicalHistoryDTO(
                                     mapper.getLastName(),
                                     mapper.getPhone(),
                                     String.format("%.0f", Person.getAge(dateString)),
@@ -100,7 +100,7 @@ public class FireStationService {
                                 mapper.getAddress(),
                                 personRepository.findAllByAddress(mapper.getAddress())
                                         .stream()
-                                        .map(mapperPerson -> new PersonContactDTO(
+                                        .map(mapperPerson -> new PersonContactMedicalHistoryDTO(
                                                         mapperPerson.getLastName(),
                                                         mapperPerson.getPhone(),
                                                         medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
@@ -127,8 +127,10 @@ public class FireStationService {
      * @return
      */
     public List<FireStationPerson> getAllPersonsByStation(String stationNumber){
-        return fireStationRepository.findAllByStationNumber(stationNumber)
+        return fireStationRepository.findByStation(stationNumber)
                 .stream()
-                .map(m ->))
+                .map(mapper -> new FireStationPerson(
+
+                )))
     }
 }

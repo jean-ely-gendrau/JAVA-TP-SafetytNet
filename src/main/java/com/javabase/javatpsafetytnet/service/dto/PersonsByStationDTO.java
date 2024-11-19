@@ -6,9 +6,9 @@ public class PersonsByStationDTO {
 
     private String firestation;
     private String address;
-    private List<PersonContactDTO> personFireAlertList;
+    private List<PersonContactMedicalHistoryDTO> personFireAlertList;
 
-    public PersonsByStationDTO(String firestation, String address, List<PersonContactDTO> personFireAlertList) {
+    public PersonsByStationDTO(String firestation, String address, List<PersonContactMedicalHistoryDTO> personFireAlertList) {
         this.firestation = firestation;
         this.address = address;
         this.personFireAlertList = personFireAlertList;
@@ -20,7 +20,7 @@ public class PersonsByStationDTO {
         return firestation;
     }
 
-    public List<PersonContactDTO> getPersonFireAlertList() {
+    public List<PersonContactMedicalHistoryDTO> getPersonFireAlertList() {
         return personFireAlertList;
     }
 
@@ -34,7 +34,7 @@ public class PersonsByStationDTO {
         this.firestation = firestation;
     }
 
-    public void setPersonFireAlertList(List<PersonContactDTO> personFireAlertList) {
+    public void setPersonFireAlertList(List<PersonContactMedicalHistoryDTO> personFireAlertList) {
         this.personFireAlertList = personFireAlertList;
     }
 
