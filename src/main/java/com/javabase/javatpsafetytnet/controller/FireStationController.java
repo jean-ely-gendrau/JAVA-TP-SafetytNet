@@ -1,11 +1,9 @@
 package com.javabase.javatpsafetytnet.controller;
 
-import com.javabase.javatpsafetytnet.model.FireStation;
 import com.javabase.javatpsafetytnet.service.FireStationService;
 import com.javabase.javatpsafetytnet.service.dto.FireStationPerson;
 import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +34,7 @@ public class FireStationController {
     }
 
     @GetMapping("/firestation")
-    public List<FireStationPerson> firestation(@RequestParam(name = "stationNumber") String stationNumber{
+    public List<FireStationPerson> fireStation(@RequestParam(name = "stationNumber") String stationNumber{
         return fireStationService.getAllPersonsByStation(stationNumber);
     }
 
