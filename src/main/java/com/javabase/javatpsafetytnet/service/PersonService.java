@@ -3,6 +3,7 @@ package com.javabase.javatpsafetytnet.service;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.dto.ChildAlertDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,4 +41,7 @@ public class PersonService {
                .collect(Collectors.toList());
     }
 
+    public List<PersonMedicalHistoryDTO> findPersonInfo(String lastName, String fistName){
+        return personRepository.findByIndentity(String lastName, String firstName);
+    }
 }
