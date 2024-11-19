@@ -18,10 +18,11 @@ public class PersonController {
         this.personService = personService;
     }
 
-
     @GetMapping("/communityEmail")
     public List<String> getCommunityEmail(@RequestParam(name ="city") String city){
         return personService.findCommunityEmail(city);
     }
 
+    @GetMapping("/personInfo")
+    public List
 }
