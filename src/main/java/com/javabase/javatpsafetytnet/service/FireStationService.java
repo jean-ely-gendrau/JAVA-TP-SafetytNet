@@ -6,10 +6,7 @@ import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
-import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
-import com.javabase.javatpsafetytnet.service.dto.PersonContactDTO;
-import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
-import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
+import com.javabase.javatpsafetytnet.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -96,7 +93,7 @@ public class FireStationService {
     }
 
     public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumber) {
-        return fireStationRepository.findAllByStationNumber(stationsNumber)
+        return fireStationRepository.findAllByListStationNumber(stationsNumber)
                 .stream()
                 .map(mapper -> new PersonsByStationDTO(
                                 mapper.getStation(),
@@ -121,5 +118,17 @@ public class FireStationService {
                                         ).collect(Collectors.toList())
                         )
                 ).collect(Collectors.toList());
+    }
+
+    /**
+     * getAllPersonsByStation
+     *
+     * @param stationNumber
+     * @return
+     */
+    public List<FireStationPerson> getAllPersonsByStation(String stationNumber){
+        return fireStationRepository.findAllByStationNumber(stationNumber)
+                .stream()
+                .map(m ->))
     }
 }

@@ -42,7 +42,15 @@ public class FireStationRepository {
             .findFirst();
     }
 
-    public List<FireStation> findAllByStationNumber(List<String> stationsNumber){
+    public List<FireStation> findAllByListStationNumber(List<String> stationsNumber){
+        return dataRepository
+                .findAllFireStation()
+                .stream()
+                .filter(station -> stationsNumber.contains(station.getStation()))
+                .collect(Collectors.toList());
+    }
+
+    public List<FireStation> findAllByStationNumber(String stationsNumber){
         return dataRepository
                 .findAllFireStation()
                 .stream()
