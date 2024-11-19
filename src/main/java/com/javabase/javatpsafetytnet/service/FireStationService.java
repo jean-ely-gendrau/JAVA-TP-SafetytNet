@@ -1,12 +1,14 @@
 package com.javabase.javatpsafetytnet.service;
 
 import com.javabase.javatpsafetytnet.model.FireStation;
+import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonContactDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
 import org.springframework.stereotype.Service;
 
@@ -90,10 +92,34 @@ public class FireStationService {
                 .collect(Collectors.toList());
 
 
-        return new PersonsByStationDTO(fireStation.get().getStation(), address,  personList);
+        return new PersonsByStationDTO(fireStation.get().getStation(), address, personList);
     }
 
-    public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumberList){
-
+    public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumber) {
+        return fireStationRepository.findAllByStationNumber(stationsNumber)
+                .stream()
+                .map(mapper -> new PersonsByStationDTO(
+                                mapper.getStation(),
+                                mapper.getAddress(),
+                                personRepository.findAllByAddress(mapper.getAddress())
+                                        .stream()
+                                        .map(mapperPerson -> new PersonContactDTO(
+                                                        mapperPerson.getLastName(),
+                                                        mapperPerson.getPhone(),
+                                                        medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
+                                                                .stream()
+                                                                .map(MedicalRecord::getBirthdate)
+                                                                .toString(),
+                                                        medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
+                                                                .stream()
+                                                                .map(mapperMedical -> new MedicalHistoryDTO(
+                                                                                mapperMedical.getMedications(),
+                                                                                mapperMedical.getAllergies()
+                                                                        )
+                                                                ).collect(Collectors.toList())
+                                                )
+                                        ).collect(Collectors.toList())
+                        )
+                ).collect(Collectors.toList());
     }
 }
