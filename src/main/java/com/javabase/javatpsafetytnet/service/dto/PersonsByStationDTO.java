@@ -8,6 +8,12 @@ public class PersonsByStationDTO {
     private String address;
     private List<PersonContactMedicalHistoryDTO> personFireAlertList;
 
+    /**
+     * Constructor
+     * @param firestation
+     * @param address
+     * @param personFireAlertList
+     */
     public PersonsByStationDTO(String firestation, String address, List<PersonContactMedicalHistoryDTO> personFireAlertList) {
         this.firestation = firestation;
         this.address = address;

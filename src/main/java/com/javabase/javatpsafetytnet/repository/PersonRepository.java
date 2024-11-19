@@ -65,6 +65,13 @@ public class PersonRepository {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * findAllByIdentity
+     *
+     * @param lastName
+     * @param firstName
+     * @return List Person
+     */
     public List<Person> findAllByIdentity(String lastName, String firstName){
         return dataRepository.findAllPeron()
                 .stream()

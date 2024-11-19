@@ -9,18 +9,24 @@ public class Data {
     private List<FireStation> firestations;
     private List<MedicalRecord> medicalrecords;
 
+    /**
+     * Constructor with none
+     */
+    public Data() {
+    }
 
-//    public Data(List<Person> persons, List<FireStation> firestations, List<MedicalRecord> medicalrecords) {
-//        this.persons = persons;
-//        this.firestations = firestations;
-//        this.medicalrecords = medicalrecords;
-//    }
-
-//    // Static
-//    public static <T> T get(URL url, Class<T> type) {
-//        Jackson2ObjectMapperBuilderCustomizer mapper = new ObjectMapper();
-//        return mapper.readValue(url, type);
-//    }
+    /**
+     * Constructor With Injected properties
+     *
+     * @param persons
+     * @param firestations
+     * @param medicalrecords
+     */
+    public Data(List<Person> persons, List<FireStation> firestations, List<MedicalRecord> medicalrecords) {
+        this.persons = persons;
+        this.firestations = firestations;
+        this.medicalrecords = medicalrecords;
+    }
 
     // Getter
 

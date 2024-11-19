@@ -13,17 +13,36 @@ import java.util.stream.Collectors;
 @Repository
 public class FireStationRepository {
 
+    /**
+     * Wired Repository
+     */
     private final DataRepository dataRepository;
 
+    /**
+     * Constructor
+     * Wired repositories
+     * @param dataRepository
+     */
     public FireStationRepository(DataRepository dataRepository) {
         this.dataRepository = dataRepository;
     }
 
+    /**
+     * findAll
+     *
+     * @return
+     */
     public List<FireStation> findAll(){
         return dataRepository
                 .findAllFireStation();
     }
 
+    /**
+     * findByStation
+     *
+     * @param stationNumber
+     * @return List String
+     */
     public List<String> findByStation(String stationNumber){
         return dataRepository
                 .findAllFireStation()
@@ -34,6 +53,12 @@ public class FireStationRepository {
 
     }
 
+    /**
+     * findByAddress
+     *
+     * @param address
+     * @return Optional FireStation
+     */
     public Optional<FireStation> findByAddress(String address){
     return dataRepository
             .findAllFireStation()
@@ -42,6 +67,12 @@ public class FireStationRepository {
             .findFirst();
     }
 
+    /**
+     * findAllByListStationNumber
+     *
+     * @param stationsNumber
+     * @return List FireStation
+     */
     public List<FireStation> findAllByListStationNumber(List<String> stationsNumber){
         return dataRepository
                 .findAllFireStation()
@@ -50,6 +81,11 @@ public class FireStationRepository {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * findAllByStationNumber
+     * @param stationsNumber
+     * @return List FireStation
+     */
     public List<FireStation> findAllByStationNumber(String stationsNumber){
         return dataRepository
                 .findAllFireStation()

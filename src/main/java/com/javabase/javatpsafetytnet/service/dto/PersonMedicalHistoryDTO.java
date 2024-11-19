@@ -11,6 +11,15 @@ public class PersonMedicalHistoryDTO {
 
     private MedicalHistoryDTO medicalHistoryList;
 
+    /**
+     * Constructor
+     *
+     * @param lastName
+     * @param address
+     * @param email
+     * @param age
+     * @param medicalHistoryList
+     */
     public PersonMedicalHistoryDTO(String lastName, String address, String email, String age, MedicalHistoryDTO medicalHistoryList) {
         this.lastName = lastName;
         this.address = address;

@@ -12,18 +12,38 @@ import java.util.List;
 @RestController
 public class PersonController {
 
-
+    /**
+     * Wired Services
+     */
     private final PersonService personService;
 
+    /**
+     * Constructor
+     * Wire services
+     * @param personService
+     */
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
 
+    /**
+     * getCommunityEmail
+     *
+     * @param city
+     * @return List String
+     */
     @GetMapping("/communityEmail")
     public List<String> getCommunityEmail(@RequestParam(name ="city") String city){
         return personService.findCommunityEmail(city);
     }
 
+    /**
+     * getPersonInfo
+     *
+     * @param lastName
+     * @param firstName
+     * @return List PersonMedicalHistoryDTO
+     */
     @GetMapping("/personInfo")
     public List<PersonMedicalHistoryDTO> getPersonInfo(@RequestParam(name = "lastName") String lastName,
                                                        @RequestParam(name = "firstName") String firstName){

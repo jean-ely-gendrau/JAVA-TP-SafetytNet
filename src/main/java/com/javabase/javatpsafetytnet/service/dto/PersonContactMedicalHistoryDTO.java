@@ -10,6 +10,14 @@ public class PersonContactMedicalHistoryDTO {
 
     private List<MedicalHistoryDTO> medicalHistoryList;
 
+    /**
+     * Constructor
+     *
+     * @param lastName
+     * @param phone
+     * @param age
+     * @param medicalHistoryList
+     */
     public PersonContactMedicalHistoryDTO(String lastName, String phone, String age, List<MedicalHistoryDTO> medicalHistoryList) {
         this.lastName = lastName;
         this.phone = phone;

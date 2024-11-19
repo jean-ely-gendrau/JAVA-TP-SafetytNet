@@ -11,9 +11,21 @@ public class MedicalRecord {
     List<String> medications;
     List<String> allergies;
 
+    /**
+     * Constructor
+     */
     public MedicalRecord() {
     }
 
+    /**
+     * Constructor with injected properties
+     *
+     * @param firstName
+     * @param lastName
+     * @param birthdate
+     * @param medications
+     * @param allergies
+     */
     public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,6 +34,11 @@ public class MedicalRecord {
         this.allergies = allergies;
     }
 
+    /**
+     * toString
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         return "Person{" +

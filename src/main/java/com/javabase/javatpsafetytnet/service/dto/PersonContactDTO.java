@@ -1,13 +1,21 @@
 package com.javabase.javatpsafetytnet.service.dto;
 
-public class PersonContact {
+public class PersonContactDTO {
 
     private String fistName;
     private String lastName;
     private String address;
     private String phone;
 
-    public PersonContact(String fistName, String lastName, String address, String phone) {
+    /**
+     * Constructor
+     *
+     * @param fistName
+     * @param lastName
+     * @param address
+     * @param phone
+     */
+    public PersonContactDTO(String fistName, String lastName, String address, String phone) {
         this.fistName = fistName;
         this.lastName = lastName;
         this.address = address;

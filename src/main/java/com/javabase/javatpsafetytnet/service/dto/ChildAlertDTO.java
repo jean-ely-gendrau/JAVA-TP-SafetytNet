@@ -12,9 +12,20 @@ public class ChildAlertDTO {
 
     List<Person> familyMembers;
 
+    /**
+     * Constructor
+     */
     public ChildAlertDTO() {
     }
 
+    /**
+     * Constructor
+     *
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param familyMembers
+     */
     public ChildAlertDTO(String firstName, String lastName, Double age, List<Person> familyMembers) {
         this.firstName = firstName;
         this.lastName = lastName;

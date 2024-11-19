@@ -50,7 +50,9 @@ public class FireStationService {
         return personRepository.findAll()
                 .stream()
                 .filter(persone -> stationAddress.contains(persone.getAddress()))
+                // Return phone in result
                 .map(Person::getPhone)
+                // Remove duplicate data
                 .distinct()
                 .collect(Collectors.toList());
     }
@@ -66,19 +68,25 @@ public class FireStationService {
 
         List<PersonContactMedicalHistoryDTO> personList = personRepository.findAllByAddress(address)
                 .stream()
+
+                // MAPPING DATA TO DTO MODEL PersonContactMedicalHistoryDTO
                 .map(mapper -> {
+                            // Find birthdate
                             String dateString = medicalRecordRepository
                                     .findAllByIdentity(mapper.getLastName(), mapper.getFirstName())
                                     .get(0)
                                     .getBirthdate();
 
+                            // Return PersonContactMedicalHistoryDTO
                             return new PersonContactMedicalHistoryDTO(
                                     mapper.getLastName(),
                                     mapper.getPhone(),
                                     String.format("%.0f", Person.getAge(dateString)),
+                                    // FIND MEDICAL RECORD By Identity
                                     medicalRecordRepository.findAllByIdentity(mapper.getLastName(), mapper.getFirstName())
                                             .stream()
-                                            .map(mapperMRR -> new MedicalHistoryDTO(
+                                            .map(mapperMRR ->
+                                                    new MedicalHistoryDTO(
                                                             mapperMRR.getMedications(),
                                                             mapperMRR.getAllergies()
                                                     )
@@ -86,6 +94,7 @@ public class FireStationService {
                             );
                         }
                 )
+                // Collect PersonContactMedicalHistoryDTO
                 .collect(Collectors.toList());
 
 
@@ -101,29 +110,51 @@ public class FireStationService {
     public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumber) {
         return fireStationRepository.findAllByListStationNumber(stationsNumber)
                 .stream()
-                .map(mapper -> new PersonsByStationDTO(
+                // MAPPING DATA TO DTO MODEL PersonsByStationDTO
+                .map(mapper ->
+                        new PersonsByStationDTO(
                                 mapper.getStation(),
                                 mapper.getAddress(),
                                 personRepository.findAllByAddress(mapper.getAddress())
                                         .stream()
-                                        .map(mapperPerson -> new PersonContactMedicalHistoryDTO(
+
+                                        // MAPPING DATA TO DTO MODEL PersonContactMedicalHistoryDTO
+                                        .map(mapperPerson ->
+
+                                                new PersonContactMedicalHistoryDTO(
                                                         mapperPerson.getLastName(),
                                                         mapperPerson.getPhone(),
+                                                        // Find BirthDate and String AGE format
+                                                        String.format("%.0f",
+                                                                Person.getAge(medicalRecordRepository.findByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
+                                                                        .get(0)
+                                                                        .getBirthdate())
+                                                        ),
+                                                        // Find Medical Records
                                                         medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
                                                                 .stream()
-                                                                .map(MedicalRecord::getBirthdate)
-                                                                .toString(),
-                                                        medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
-                                                                .stream()
-                                                                .map(mapperMedical -> new MedicalHistoryDTO(
+
+                                                                // MAPPING DATA TO DTO MODEL MedicalHistoryDTO
+                                                                .map(mapperMedical ->
+
+                                                                        new MedicalHistoryDTO(
                                                                                 mapperMedical.getMedications(),
                                                                                 mapperMedical.getAllergies()
                                                                         )
-                                                                ).collect(Collectors.toList())
+
+                                                                )
+                                                                // Collect Medical records
+                                                                .collect(Collectors.toList())
                                                 )
-                                        ).collect(Collectors.toList())
+
+                                        )
+                                        // COLLECT DATA PersonContactMedicalHistoryDTO
+                                        .collect(Collectors.toList())
                         )
-                ).collect(Collectors.toList());
+
+                )
+                // COLLECT DATA PersonsByStationDTO
+                .collect(Collectors.toList());
     }
 
     /**
@@ -132,40 +163,65 @@ public class FireStationService {
      * @param stationNumber
      * @return
      */
-    public List<FireStationPerson> getAllPersonsByStation(String stationNumber) {
+    public List<FireStationPersonDTO> getAllPersonsByStation(String stationNumber) {
         return fireStationRepository.findAllByStationNumber(stationNumber)
                 .stream()
-                .map(mapper -> new FireStationPerson(
-                        mapper.getStation(),
-                        personRepository.findAllByAddress(mapper.getAddress())
-                                .stream()
-                                .map(person -> new PersonContact(
-                                                person.getFirstName(),
-                                                person.getLastName(),
-                                                person.getAddress(),
-                                                person.getPhone()
+
+                // MAPPING DATA TO DTO MODEL FireStationPersonDTO
+                .map(mapper ->
+
+                        new FireStationPersonDTO(
+                                mapper.getStation(),
+                                personRepository.findAllByAddress(mapper.getAddress())
+                                        .stream()
+
+                                        // MAPPING DATA TO DTO MODEL PersonContactDTO
+                                        .map(person ->
+
+                                                new PersonContactDTO(
+                                                        person.getFirstName(),
+                                                        person.getLastName(),
+                                                        person.getAddress(),
+                                                        person.getPhone()
+                                                )
+
                                         )
-                                ).collect(Collectors.toList()),
-                        personRepository.findAllByAddress(mapper.getAddress())
-                                .stream()
-                                .filter(person -> {
-                                            String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
-                                                    .get(0)
-                                                    .getBirthdate();
+                                        // COLLETE DATA to DTO PersonContactDTO
+                                        .collect(Collectors.toList()),
 
-                                            return Person.isAdult(birthDate);
-                                        }
-                                ).count(),
-                        personRepository.findAllByAddress(mapper.getAddress())
-                                .stream()
-                                .filter(person -> {
-                                            String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
-                                                    .get(0)
-                                                    .getBirthdate();
+                                // COUNT MAJOR
+                                personRepository.findAllByAddress(mapper.getAddress())
+                                        .stream()
+                                        .filter(person -> {
 
-                                            return !Person.isAdult(birthDate);
-                                        }
-                                ).count()))
+                                                    String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
+                                                            .get(0)
+                                                            .getBirthdate();
+
+                                                    return Person.isAdult(birthDate);
+
+                                                }
+                                        )
+                                        .count(),
+
+                                // COUNT MINOR
+                                personRepository.findAllByAddress(mapper.getAddress())
+                                        .stream()
+                                        .filter(person -> {
+
+                                                    String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
+                                                            .get(0)
+                                                            .getBirthdate();
+
+                                                    return !Person.isAdult(birthDate);
+
+                                                }
+                                        )
+                                        .count()
+                        )
+
+                )
+                // RETURN COLLETE DATA
                 .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,12 @@ public class MedicalHistoryDTO {
     List<String> medications;
     List<String> allergies;
 
+    /**
+     * Constructor
+     *
+     * @param medications
+     * @param allergies
+     */
     public MedicalHistoryDTO(List<String> medications, List<String> allergies) {
         this.medications = medications;
         this.allergies = allergies;

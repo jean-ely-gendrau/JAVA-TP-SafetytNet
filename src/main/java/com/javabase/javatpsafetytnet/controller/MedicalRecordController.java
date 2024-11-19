@@ -17,7 +17,6 @@ public class MedicalRecordController {
      */
     private final MedicalRecordService medicalRecordService;
 
-    private Mapper mapper;
     /**
      * Constructor
      * Wire Service

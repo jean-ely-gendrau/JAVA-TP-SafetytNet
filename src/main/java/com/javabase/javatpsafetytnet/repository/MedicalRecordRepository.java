@@ -11,12 +11,26 @@ import java.util.stream.Collectors;
 @Repository
 public class MedicalRecordRepository {
 
+    /**
+     * Wired Repositories
+     */
     private final DataRepository dataRepository;
 
+    /**
+     * Contructor
+     * Wired repositories
+     *
+     * @param dataRepository
+     */
     public MedicalRecordRepository(DataRepository dataRepository) {
         this.dataRepository = dataRepository;
     }
 
+    /**
+     * findAll
+     *
+     * @return List MedicalRecord
+     */
     public List<MedicalRecord> findAll() {
         return dataRepository
                 .findAllMedicalRecord();

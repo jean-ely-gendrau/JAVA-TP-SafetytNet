@@ -98,13 +98,19 @@ public class MedicalRecordService {
         return medicalRecordRepository
                 .findAll()
                 .stream()
+
+                // Filter All persons match with lastName
                 .filter(medicalRecord ->
                         personList.stream()
                                 .allMatch(
                                         person -> Objects.equals(person.getLastName(), medicalRecord.getLastName())
                                 )
                 )
+
+                // Filter Match isAdult return false to select a minorPerson
                 .filter(medicalRecord -> !Person.isAdult(medicalRecord.getBirthdate()))
+
+                // MAPPING DATA TO DTO MODEL ChildAlertDTO
                 .map(mapper ->
                         new ChildAlertDTO(
                                 mapper.getFirstName(),
@@ -116,6 +122,7 @@ public class MedicalRecordService {
                                         .toList()
                         )
                 )
+                // Collect to ChildAlertDTO
                 .collect(Collectors.toList());
     }
 }

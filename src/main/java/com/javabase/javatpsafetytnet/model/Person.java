@@ -14,9 +14,23 @@ public class Person {
     private String phone;
     private String email;
 
+    /**
+     * Constructor
+     */
     public Person() {
     }
 
+    /**
+     * Constructor with injected properties
+     *
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param city
+     * @param zip
+     * @param phone
+     * @param email
+     */
     public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +41,11 @@ public class Person {
         this.email = email;
     }
 
+    /**
+     * toString
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         return "Person{" +
@@ -46,7 +65,7 @@ public class Person {
      * static getAge
      *
      * @param birthdate
-     * @return int
+     * @return double
      */
     public static double getAge(String birthdate){
         LocalDate localDateNow = LocalDate.now();
@@ -55,10 +74,15 @@ public class Person {
         return Period.between(LocalDate.parse(birthdate, formatter), localDateNow).getYears();
     }
 
+    /**
+     * isAdult
+     *
+     * @param birthdate
+     * @return boolean
+     */
     public static  boolean isAdult(String birthdate){
         LocalDate localDateNow = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
 
         return Period.between(LocalDate.parse(birthdate, formatter), localDateNow).getYears() >= 18;
     }

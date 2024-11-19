@@ -13,17 +13,28 @@ public class DataRepository {
 
     private Data data;
 
-    // All Person
+    /**
+     * findAllPeron
+     *
+     * @return List Person
+     */
     public List<Person> findAllPeron(){
         return data.getPersons();
     }
 
-    // All FireStation
+    /**
+     *
+     * @return List FireStation
+     */
     public List<FireStation> findAllFireStation(){
         return data.getFirestations();
     }
 
-    // All MedicalRecord
+    /**
+     * findAllMedicalRecord
+     *
+     * @return List MedicalRecord
+     */
     public List<MedicalRecord> findAllMedicalRecord(){
         return data.getMedicalrecords();
     }

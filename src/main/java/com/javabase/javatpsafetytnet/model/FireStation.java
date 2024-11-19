@@ -5,9 +5,18 @@ public class FireStation {
     private String address;
     private String station;
 
+    /**
+     * Constructor with non
+     */
     public FireStation() {
     }
 
+    /**
+     * Constructor with injected properties
+     *
+     * @param address
+     * @param station
+     */
     public FireStation(String address, String station) {
         this.address = address;
         this.station = station;

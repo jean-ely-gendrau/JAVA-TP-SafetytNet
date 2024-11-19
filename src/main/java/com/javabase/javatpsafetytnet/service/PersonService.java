@@ -43,23 +43,40 @@ public class PersonService {
                 .findByCity(city)
                 .stream()
                 .map(person -> person.getEmail())
+                // Unique
                 .distinct()
                 .collect(Collectors.toList());
     }
 
+    /**
+     * findPersonInfo
+     *
+     * @param lastName
+     * @param firstName
+     * @return List PersonMedicalHistoryDTO
+     */
     public List<PersonMedicalHistoryDTO> findPersonInfo(String lastName, String firstName) {
         return personRepository.findAllByIdentity(lastName, firstName)
                 .stream()
+                // MAPPING DATA TO DTO MODEL PersonMedicalHistoryDTO
                 .map(mapper -> {
+
+                            // Find medical records of person by lastName and firstName
                             MedicalRecord medicalRecordList = medicalRecordRepository.findByIdentity(mapper.getLastName(), mapper.getFirstName()).get(0);
+                            // Format Age
                             String age = String.format("%.0f", Person.getAge(medicalRecordList.getBirthdate()));
+
+                            // lambdas Return model PersonMedicalHistoryDTO
                             return new PersonMedicalHistoryDTO(
                                     mapper.getLastName(),
                                     mapper.getAddress(),
                                     mapper.getEmail(),
                                     age,
+                                    // Inject Instance of Model MedicalHistoryDTO
                                     new MedicalHistoryDTO(medicalRecordList.getMedications(), medicalRecordList.getAllergies()));
                         }
-                ).collect(Collectors.toList());
+                )
+                // Return Collect Data to PersonMedicalHistoryDTO
+                .collect(Collectors.toList());
     }
 }
