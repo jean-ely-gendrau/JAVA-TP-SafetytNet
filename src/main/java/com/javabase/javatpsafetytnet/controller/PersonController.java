@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PersonController {
@@ -20,6 +21,7 @@ public class PersonController {
     /**
      * Constructor
      * Wire services
+     *
      * @param personService
      */
     public PersonController(PersonService personService) {
@@ -33,7 +35,7 @@ public class PersonController {
      * @return List String
      */
     @GetMapping("/communityEmail")
-    public List<String> getCommunityEmail(@RequestParam(name ="city") String city){
+    public List<String> getCommunityEmail(@RequestParam(name = "city") String city) {
         return personService.findCommunityEmail(city);
     }
 
@@ -44,9 +46,12 @@ public class PersonController {
      * @param firstName
      * @return List PersonMedicalHistoryDTO
      */
+
     @GetMapping("/personInfo")
-    public List<PersonMedicalHistoryDTO> getPersonInfo(@RequestParam(name = "lastName") String lastName,
-                                                       @RequestParam(name = "firstName") String firstName){
+    public List<PersonMedicalHistoryDTO> getPersonInfo(
+            @RequestParam(name = "lastName") String lastName,
+            @RequestParam(name = "firstName") String firstName
+    ) {
         return personService.findPersonInfo(lastName, firstName);
     }
 }

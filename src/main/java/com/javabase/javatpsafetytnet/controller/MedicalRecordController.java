@@ -2,7 +2,6 @@ package com.javabase.javatpsafetytnet.controller;
 
 import com.javabase.javatpsafetytnet.service.MedicalRecordService;
 import com.javabase.javatpsafetytnet.service.dto.ChildAlertDTO;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,7 @@ import java.util.List;
 public class MedicalRecordController {
 
     /**
-     *  Declare wired service
+     * Declare wired service
      */
     private final MedicalRecordService medicalRecordService;
 
@@ -32,11 +31,15 @@ public class MedicalRecordController {
      * <p>
      *
      * </p>
+     *
      * @param address
      * @return
      */
     @GetMapping("/childAlert")
-    public List<ChildAlertDTO> childAlert(@RequestParam(name = "address") String address){
+    public List<ChildAlertDTO> childAlert(
+            @RequestParam(name = "address")
+            String address
+    ) {
         return medicalRecordService.getAllChildrenByAddress(address);
     }
 }

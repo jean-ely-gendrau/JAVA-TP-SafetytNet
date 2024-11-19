@@ -9,6 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class JavaTpSafetytNetTest {
 
     @Test
-    void main() {
+    void contextLoads() {
     }
 }
