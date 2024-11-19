@@ -92,6 +92,12 @@ public class FireStationService {
         return new PersonsByStationDTO(fireStation.get().getStation(), address, personList);
     }
 
+    /**
+     * getAllPersonsByStations
+     *
+     * @param stationsNumber
+     * @return List PersonsByStationDTO
+     */
     public List<PersonsByStationDTO> getAllPersonsByStations(List<String> stationsNumber) {
         return fireStationRepository.findAllByListStationNumber(stationsNumber)
                 .stream()
@@ -126,11 +132,40 @@ public class FireStationService {
      * @param stationNumber
      * @return
      */
-    public List<FireStationPerson> getAllPersonsByStation(String stationNumber){
-        return fireStationRepository.findByStation(stationNumber)
+    public List<FireStationPerson> getAllPersonsByStation(String stationNumber) {
+        return fireStationRepository.findAllByStationNumber(stationNumber)
                 .stream()
                 .map(mapper -> new FireStationPerson(
+                        mapper.getStation(),
+                        personRepository.findAllByAddress(mapper.getAddress())
+                                .stream()
+                                .map(person -> new PersonContact(
+                                                person.getFirstName(),
+                                                person.getLastName(),
+                                                person.getAddress(),
+                                                person.getPhone()
+                                        )
+                                ).collect(Collectors.toList()),
+                        personRepository.findAllByAddress(mapper.getAddress())
+                                .stream()
+                                .filter(person -> {
+                                            String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
+                                                    .get(0)
+                                                    .getBirthdate();
 
-                )))
+                                            return Person.isAdult(birthDate);
+                                        }
+                                ).count(),
+                        personRepository.findAllByAddress(mapper.getAddress())
+                                .stream()
+                                .filter(person -> {
+                                            String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
+                                                    .get(0)
+                                                    .getBirthdate();
+
+                                            return !Person.isAdult(birthDate);
+                                        }
+                                ).count()))
+                .collect(Collectors.toList());
     }
 }

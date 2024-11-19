@@ -8,10 +8,10 @@ public class FireStationPerson {
 
     private List<PersonContact> personContactList;
 
-    private double personMajor;
-    private double personMinor;
+    private long personMajor;
+    private long personMinor;
 
-    public FireStationPerson(String firestation, List<PersonContact> personContactList, double personMajor, double personMinor) {
+    public FireStationPerson(String firestation, List<PersonContact> personContactList, long personMajor, long personMinor) {
         this.firestation = firestation;
         this.personContactList = personContactList;
         this.personMajor = personMajor;
@@ -28,11 +28,11 @@ public class FireStationPerson {
         return personContactList;
     }
 
-    public double getPersonMajor() {
+    public long getPersonMajor() {
         return personMajor;
     }
 
-    public double getPersonMinor() {
+    public long getPersonMinor() {
         return personMinor;
     }
 
@@ -46,11 +46,11 @@ public class FireStationPerson {
         this.firestation = firestation;
     }
 
-    public void setPersonMajor(double personMajor) {
+    public void setPersonMajor(long personMajor) {
         this.personMajor = personMajor;
     }
 
-    public void setPersonMinor(double personMinor) {
+    public void setPersonMinor(long personMinor) {
         this.personMinor = personMinor;
     }
 }

@@ -34,7 +34,7 @@ public class FireStationController {
     }
 
     @GetMapping("/firestation")
-    public List<FireStationPerson> fireStation(@RequestParam(name = "stationNumber") String stationNumber{
+    public List<FireStationPerson> fireStation(@RequestParam(name = "stationNumber") String stationNumber){
         return fireStationService.getAllPersonsByStation(stationNumber);
     }
 
