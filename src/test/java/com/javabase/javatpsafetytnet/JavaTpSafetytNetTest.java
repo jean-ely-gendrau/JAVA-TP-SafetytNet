@@ -11,4 +11,9 @@ class JavaTpSafetytNetTest {
     @Test
     void contextLoads() {
     }
+
+    @Test
+    public void mainContextTest() {
+        JavaTpSafetytNet.main(new String[] {});
+    }
 }
