@@ -1,6 +1,7 @@
 package com.javabase.javatpsafetytnet.repository;
 
 import com.javabase.javatpsafetytnet.model.Person;
+import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -61,6 +62,13 @@ public class PersonRepository {
         return dataRepository.findAllPeron()
                 .stream()
                 .filter(person -> Objects.equals(person.getAddress(), address))
+                .collect(Collectors.toList());
+    }
+
+    public List<Person> findAllByIdentity(String lastName, String firstName){
+        return dataRepository.findAllPeron()
+                .stream()
+                .filter(person -> Objects.equals(person.getFirstName(), firstName) || Objects.equals(person.getLastName(), lastName))
                 .collect(Collectors.toList());
     }
 }

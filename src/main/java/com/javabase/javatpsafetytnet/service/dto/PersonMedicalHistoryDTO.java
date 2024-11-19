@@ -9,9 +9,9 @@ public class PersonMedicalHistoryDTO {
     private String email;
     private String age;
 
-    private List<MedicalHistoryDTO> medicalHistoryList;
+    private MedicalHistoryDTO medicalHistoryList;
 
-    public PersonMedicalHistoryDTO(String lastName, String address, String email, String age, List<MedicalHistoryDTO> medicalHistoryList) {
+    public PersonMedicalHistoryDTO(String lastName, String address, String email, String age, MedicalHistoryDTO medicalHistoryList) {
         this.lastName = lastName;
         this.address = address;
         this.email = email;
@@ -37,7 +37,7 @@ public class PersonMedicalHistoryDTO {
         return age;
     }
 
-    public List<MedicalHistoryDTO> getMedicalHistoryList() {
+    public MedicalHistoryDTO getMedicalHistoryList() {
         return medicalHistoryList;
     }
 
@@ -59,7 +59,7 @@ public class PersonMedicalHistoryDTO {
         this.age = age;
     }
 
-    public void setMedicalHistoryList(List<MedicalHistoryDTO> medicalHistoryList) {
+    public void setMedicalHistoryList(MedicalHistoryDTO medicalHistoryList) {
         this.medicalHistoryList = medicalHistoryList;
     }
 }

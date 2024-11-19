@@ -51,4 +51,20 @@ public class MedicalRecordRepository {
                 .filter(medicalRecord ->Objects.equals(medicalRecord.getFirstName(), firstName))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * findByIdentity
+     *
+     * @param lastName
+     * @param firstName
+     * @return List MedicalRecord
+     */
+    public List<MedicalRecord> findByIdentity(String lastName, String firstName) {
+        return dataRepository
+                .findAllMedicalRecord()
+                .stream()
+                .filter(medicalRecord -> Objects.equals(medicalRecord.getLastName(), lastName))
+                .filter(medicalRecord ->Objects.equals(medicalRecord.getFirstName(), firstName))
+                .collect(Collectors.toList());
+    }
 }
