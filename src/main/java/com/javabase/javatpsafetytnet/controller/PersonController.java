@@ -2,6 +2,7 @@ package com.javabase.javatpsafetytnet.controller;
 
 import com.javabase.javatpsafetytnet.service.PersonService;
 import com.javabase.javatpsafetytnet.service.dto.ChildAlertDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +25,8 @@ public class PersonController {
     }
 
     @GetMapping("/personInfo")
-    public List
+    public List<PersonMedicalHistoryDTO> getPersonInfo(@RequestParam(name = "lastName") String lastName,
+                                                       @RequestParam(name = "firstName") String firstName){
+        return personService.findPersonInfo(lastName, firstName);
+    }
 }
