@@ -75,6 +75,20 @@ class DataTest {
     @Test
     void setFirestations() {
 
+        List<FireStation> fireStationsList = new ArrayList<>();
+
+        FireStation fireStation = new FireStation();
+        fireStation.setAddress("la valette");
+        fireStation.setStation("1");
+
+        fireStationsList.add(fireStation);
+
+        data.setFirestations(fireStationsList);
+
+        assertEquals("la valette", fireStation.getAddress());
+        assertEquals("1", fireStation.getStation());
+
+        assertEquals(fireStationsList, data.getFirestations());
     }
 
     @Test
