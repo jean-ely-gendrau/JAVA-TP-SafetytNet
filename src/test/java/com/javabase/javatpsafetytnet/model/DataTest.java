@@ -93,5 +93,25 @@ class DataTest {
 
     @Test
     void setMedicalrecords() {
+        List<MedicalRecord> medicalRecordsList = new ArrayList<>();
+        List<String> medication = new ArrayList<>();
+        List<String> allergie = new ArrayList<>();
+
+        medication.add("tramadol:2000MG");
+        allergie.add("peanut");
+
+        MedicalRecord medicalRecord = new MedicalRecord();
+
+        medicalRecord.setMedications(medication);
+        medicalRecord.setAllergies(allergie);
+
+        medicalRecordsList.add(medicalRecord);
+
+        data.setMedicalrecords(medicalRecordsList);
+
+        assertEquals(allergie, medicalRecord.getAllergies());
+        assertEquals(medication, medicalRecord.getMedications());
+
+        assertEquals(medicalRecordsList, data.getMedicalrecords());
     }
 }
