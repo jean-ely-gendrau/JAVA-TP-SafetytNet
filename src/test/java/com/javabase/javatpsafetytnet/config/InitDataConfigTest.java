@@ -16,8 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class InitDataConfigTest {
@@ -28,22 +27,35 @@ class InitDataConfigTest {
     @InjectMocks
     InitDataConfig initDataConfig;
 
+//    @Test
+//    void runnerJsonFileToMapThrow() throws IOException {
+//        when(initDataConfig.runner()).thenReturn(args->{
+//            initDataConfig.jsonFileToMap("dataz.json");
+//        });
+//
+//        initDataConfig.runner();
+//
+//
+//     //  assertTrue(exception.getMessage().contains("Error loading JSON file : dataz.json"));
+//
+//    }
+
     @Test
-    void jsonFileToMapThrow() throws IOException {
-        String file = "data.json";
+    void jsonFileToMapThrow() {
+        String file = "dataz.json";
         File fileMock = mock(File.class);
         ObjectMapper objectMapperMock = mock(ObjectMapper.class);
 
-        when(objectMapperMock.readValue(fileMock, Data.class)).thenThrow(
-                new IOException("File not found")
+//        when(objectMapperMock.readValue(fileMock, Data.class)).thenThrow(
+//                new IOException("File not found")
+//        );
+
+        IOException exception = assertThrows(IOException.class, () ->
+            initDataConfig.jsonFileToMap(file)
         );
 
-        IOException exception = assertThrows(IOException.class, () -> {
-            initDataConfig.jsonFileToMap(file);
-        });
-
         // Verify exception message
-        assertTrue(exception.getMessage().contains("Error reading or parsing the JSON file"));
+        assertTrue(exception.getMessage().contains("Error reading or paring JSON file : dataz.json"));
 
     }
 }

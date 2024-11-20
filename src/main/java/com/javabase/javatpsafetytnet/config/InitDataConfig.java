@@ -47,7 +47,7 @@ public class InitDataConfig implements IJsonUtils {
             dataRepository.setData(objectMapper.readValue(new File(path), Data.class));
         } catch (IOException e) {
             logger.error("Failed to parse JSON file as {}: {}", "data.json", e.getMessage());
-            throw new IOException("Error reading or paring JSON file :"+path,e);
+            throw new IOException("Error reading or paring JSON file : " + path , e);
         }
     }
 }
