@@ -47,6 +47,8 @@ class FireStationControllerTest {
     }
 
     @Test
-    void fireStation() {
+    void fireStation() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/firestation?stationNumber=" + anyString()))
+                .andExpect(status().isOk());
     }
 }
