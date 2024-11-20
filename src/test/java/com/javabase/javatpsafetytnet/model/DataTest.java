@@ -52,8 +52,9 @@ class DataTest {
 
         Person person = new Person();
         person.setLastName("Jean");
-        person.setFirstName("Ely");
+        person.setFirstName("Luc");
         person.setEmail("jean@gmail.com");
+        person.setPhone("111-111-111");
         person.setAddress("la valette");
         person.setCity("Toulon");
         person.setZip("83000");
@@ -65,8 +66,9 @@ class DataTest {
         assertEquals(personList, data.getPersons());
 
         assertEquals("Jean", person.getLastName());
-        assertEquals("Ely", person.getFirstName());
+        assertEquals("Luc", person.getFirstName());
         assertEquals("jean@gmail.com", person.getEmail());
+        assertEquals("111-111-111",person.getPhone());
         assertEquals("la valette", person.getAddress());
         assertEquals("Toulon", person.getCity());
         assertEquals("83000", person.getZip());
