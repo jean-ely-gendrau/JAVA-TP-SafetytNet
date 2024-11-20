@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,12 +36,14 @@ class FireStationControllerTest {
 
     @Test
     void fireAlert() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/fire?address="+anyString()))
+        mockMvc.perform(MockMvcRequestBuilders.get("/fire?address=" + anyString()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void floodStation() {
+    void floodStation() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/flood/stations?stations=" + anyList()))
+                .andExpect(status().isOk());
     }
 
     @Test
