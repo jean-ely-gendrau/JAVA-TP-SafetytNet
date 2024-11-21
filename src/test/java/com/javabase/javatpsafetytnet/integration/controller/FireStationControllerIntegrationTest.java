@@ -6,6 +6,7 @@ import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.FireStationService;
 import com.javabase.javatpsafetytnet.service.MedicalRecordService;
 import com.javabase.javatpsafetytnet.service.PersonService;
+import com.javabase.javatpsafetytnet.service.dto.FireStationPersonDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonContactMedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
 import org.junit.jupiter.api.Test;
@@ -83,5 +84,12 @@ class FireStationControllerIntegrationTest {
 
     @Test
     void fireStation() {
+        String stationNumber = "1";
+        List<FireStationPersonDTO> fireStationPersonDTOList = fireStationService.getAllPersonsByStation(stationNumber);
+
+        assertNotNull(fireStationPersonDTOList);
+        assertEquals(stationNumber, fireStationPersonDTOList.get(0).getFirestation());
+        assertEquals(1, fireStationPersonDTOList.get(0).getPersonMajor());
     }
+
 }
