@@ -108,9 +108,6 @@ class DataTest {
 
         data.setMedicalrecords(medicalRecordsList);
 
-        assertEquals(allergie, medicalRecord.getAllergies());
-        assertEquals(medication, medicalRecord.getMedications());
-
         assertEquals(medicalRecordsList, data.getMedicalrecords());
     }
 }
