@@ -24,35 +24,35 @@ class FireStationTest {
 
     @Test
     void getAddress() {
-        FireStation fireStation = new FireStation();
+       // FireStation fireStation = new FireStation();
 
-        fireStation.setAddress("la valette");
+        mockFireStation.setAddress("la valette");
 
-        assertEquals("la valette", fireStation.getAddress());
+        assertEquals("la valette", mockFireStation.getAddress());
     }
 
     @Test
     void getStation() {
-        FireStation fireStation = new FireStation();
+       // FireStation fireStation = new FireStation();
 
-        fireStation.setStation("1");
+        mockFireStation.setStation("1");
 
         assertEquals("1", mockFireStation.getStation());
     }
 
     @Test
     void setAddress() {
-        FireStation fireStation = new FireStation();
-        fireStation.setStation("1");
+       // FireStation fireStation = new FireStation();
+        mockFireStation.setStation("1");
 
-        assertEquals("1", fireStation.getStation());
+        assertEquals("1", mockFireStation.getStation());
     }
 
     @Test
     void setStation() {
-        FireStation fireStation = new FireStation();
-        fireStation.setAddress("la valette");
+      //  FireStation fireStation = new FireStation();
+        mockFireStation.setAddress("la valette");
 
-        assertEquals("la valette", fireStation.getAddress());
+        assertEquals("la valette", mockFireStation.getAddress());
     }
 }
