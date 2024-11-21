@@ -1,6 +1,5 @@
 package com.javabase.javatpsafetytnet.repository;
 
-import com.javabase.javatpsafetytnet.model.FireStation;
 import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import org.springframework.stereotype.Repository;
 
@@ -34,20 +33,6 @@ public class MedicalRecordRepository {
     public List<MedicalRecord> findAll() {
         return dataRepository
                 .findAllMedicalRecord();
-    }
-
-    /**
-     * findAllByLastName
-     *
-     * @param lastName
-     * @return List MedicalRecord
-     */
-    public List<MedicalRecord> findAllByLastName(String lastName) {
-        return dataRepository
-                .findAllMedicalRecord()
-                .stream()
-                .filter(medicalRcord -> Objects.equals(medicalRcord.getLastName(), lastName))
-                .collect(Collectors.toList());
     }
 
     /**
