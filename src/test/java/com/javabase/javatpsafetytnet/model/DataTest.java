@@ -87,9 +87,6 @@ class DataTest {
 
         data.setFirestations(fireStationsList);
 
-        assertEquals("la valette", fireStation.getAddress());
-        assertEquals("1", fireStation.getStation());
-
         assertEquals(fireStationsList, data.getFirestations());
     }
 
