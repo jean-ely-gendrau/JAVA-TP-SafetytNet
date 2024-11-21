@@ -24,8 +24,6 @@ class FireStationTest {
 
     @Test
     void getAddress() {
-       // FireStation fireStation = new FireStation();
-
         mockFireStation.setAddress("la valette");
 
         assertEquals("la valette", mockFireStation.getAddress());
@@ -33,8 +31,6 @@ class FireStationTest {
 
     @Test
     void getStation() {
-       // FireStation fireStation = new FireStation();
-
         mockFireStation.setStation("1");
 
         assertEquals("1", mockFireStation.getStation());
@@ -42,7 +38,6 @@ class FireStationTest {
 
     @Test
     void setAddress() {
-       // FireStation fireStation = new FireStation();
         mockFireStation.setStation("1");
 
         assertEquals("1", mockFireStation.getStation());
@@ -50,7 +45,6 @@ class FireStationTest {
 
     @Test
     void setStation() {
-      //  FireStation fireStation = new FireStation();
         mockFireStation.setAddress("la valette");
 
         assertEquals("la valette", mockFireStation.getAddress());
