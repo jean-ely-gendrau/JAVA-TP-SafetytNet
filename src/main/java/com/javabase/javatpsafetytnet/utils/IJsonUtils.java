@@ -17,8 +17,8 @@ public interface IJsonUtils{
      * <pre> {@code
      * ObjectMapper objectMapper = new ObjectMapper();
      * try {
-     *  // Set Mapped Data to model with your service to separating preoccupation Logic and Data
-     *  service.setData(objectMapper.readValue(new File(path), Data.class)):
+     *  // Set Mapped Data to model with your controller to separating preoccupation Logic and Data
+     *  controller.setData(objectMapper.readValue(new File(path), Data.class)):
      * } catch (IOException e) {
      *     e.printStackTrace();
      * }

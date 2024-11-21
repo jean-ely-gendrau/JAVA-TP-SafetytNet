@@ -94,7 +94,7 @@ public class MedicalRecordService {
      */
     public List<ChildAlertDTO> getAllChildrenByAddress(String address) {
         List<Person> personList = personRepository.findAllByAddress(address);
-        ObjectMapper objectMapper = new ObjectMapper();
+       // ObjectMapper objectMapper = new ObjectMapper();
         return medicalRecordRepository
                 .findAll()
                 .stream()
@@ -118,7 +118,7 @@ public class MedicalRecordService {
                                 Person.getAge(mapper.getBirthdate()),
                                 personList
                                         .stream()
-                                        .filter(person -> Objects.equals(person.getLastName(), mapper.getLastName()))
+                                        .filter(person -> Objects.equals(person.getLastName(), mapper.getLastName()) != Objects.equals(person.getFirstName(), mapper.getFirstName()))
                                         .toList()
                         )
                 )

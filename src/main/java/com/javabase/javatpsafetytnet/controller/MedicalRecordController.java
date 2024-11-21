@@ -12,7 +12,7 @@ import java.util.List;
 public class MedicalRecordController {
 
     /**
-     * Declare wired service
+     * Declare wired controller
      */
     private final MedicalRecordService medicalRecordService;
 
