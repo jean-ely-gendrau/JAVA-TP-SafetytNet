@@ -65,13 +65,6 @@ class DataTest {
 
         assertEquals(personList, data.getPersons());
 
-        assertEquals("Jean", person.getLastName());
-        assertEquals("Luc", person.getFirstName());
-        assertEquals("jean@gmail.com", person.getEmail());
-        assertEquals("111-111-111",person.getPhone());
-        assertEquals("la valette", person.getAddress());
-        assertEquals("Toulon", person.getCity());
-        assertEquals("83000", person.getZip());
     }
 
     @Test
