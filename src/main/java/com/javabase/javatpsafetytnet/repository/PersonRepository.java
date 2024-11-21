@@ -1,7 +1,6 @@
 package com.javabase.javatpsafetytnet.repository;
 
 import com.javabase.javatpsafetytnet.model.Person;
-import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

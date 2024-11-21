@@ -1,8 +1,5 @@
 package com.javabase.javatpsafetytnet.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
-import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
@@ -10,8 +7,6 @@ import com.javabase.javatpsafetytnet.service.dto.ChildAlertDTO;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

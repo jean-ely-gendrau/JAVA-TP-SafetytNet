@@ -1,7 +1,6 @@
 package com.javabase.javatpsafetytnet.service;
 
 import com.javabase.javatpsafetytnet.model.FireStation;
-import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;

@@ -1,7 +1,6 @@
 package com.javabase.javatpsafetytnet.controller;
 
 import com.javabase.javatpsafetytnet.service.PersonService;
-import com.javabase.javatpsafetytnet.service.dto.ChildAlertDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

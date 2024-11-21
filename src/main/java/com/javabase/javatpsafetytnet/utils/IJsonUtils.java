@@ -1,7 +1,5 @@
 package com.javabase.javatpsafetytnet.utils;
 
-import com.javabase.javatpsafetytnet.model.Data;
-
 import java.io.IOException;
 
 public interface IJsonUtils{

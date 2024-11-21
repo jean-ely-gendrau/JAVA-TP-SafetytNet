@@ -1,10 +1,8 @@
 package com.javabase.javatpsafetytnet.repository;
 
 import com.javabase.javatpsafetytnet.model.FireStation;
-import com.javabase.javatpsafetytnet.model.Person;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

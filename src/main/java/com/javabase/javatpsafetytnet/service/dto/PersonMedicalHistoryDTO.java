@@ -1,7 +1,5 @@
 package com.javabase.javatpsafetytnet.service.dto;
 
-import java.util.List;
-
 public class PersonMedicalHistoryDTO {
 
     private String lastName;
