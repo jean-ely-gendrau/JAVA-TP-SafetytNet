@@ -32,7 +32,7 @@ public class FireStationRepository {
      */
     public List<FireStation> findAll(){
         return dataRepository
-                .findAllFireStation();
+                .getData().getFirestations();
     }
 
     /**
