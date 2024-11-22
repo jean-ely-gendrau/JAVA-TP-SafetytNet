@@ -4,6 +4,7 @@ import com.javabase.javatpsafetytnet.model.Person;
 
 import java.util.List;
 
+
 public class ChildAlertDTO {
 
     private String firstName;
