@@ -70,7 +70,7 @@ class FireStationPersonDTOTest {
 
     @Test
     void setFirestation() {
-        assertEquals(1,fireStationPersonDTO.getFirestation());
+        assertEquals("1",fireStationPersonDTO.getFirestation());
     }
 
     @Test
