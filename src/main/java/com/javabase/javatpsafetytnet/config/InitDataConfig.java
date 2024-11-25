@@ -6,6 +6,7 @@ import com.javabase.javatpsafetytnet.repository.DataRepository;
 import com.javabase.javatpsafetytnet.utils.IJsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,9 @@ public class InitDataConfig implements IJsonUtils {
     // Declare Service Data
     private final DataRepository dataRepository;
 
+    @Value("${app.json.data}")
+    private String jsonData;
+
     // Wire Service Data
     public InitDataConfig(DataRepository dataRepository) {
         this.dataRepository = dataRepository;
@@ -33,7 +37,7 @@ public class InitDataConfig implements IJsonUtils {
         return args -> {
             try {
                 // Load Data
-                jsonFileToMap("data.json");
+                jsonFileToMap(jsonData);
             }catch(IOException e){
                 logger.error("Error loading JSON file : {}", e.getMessage());
             }
@@ -46,7 +50,7 @@ public class InitDataConfig implements IJsonUtils {
         try {
             dataRepository.setData(objectMapper.readValue(new File(path), Data.class));
         } catch (IOException e) {
-            logger.error("Failed to parse JSON file as {}: {}", "data.json", e.getMessage());
+            logger.error("Failed to parse JSON file as {}: {}", jsonData, e.getMessage());
             throw new IOException("Error reading or paring JSON file : " + path , e);
         }
     }
