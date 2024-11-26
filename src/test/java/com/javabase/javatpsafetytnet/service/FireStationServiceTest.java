@@ -24,6 +24,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.swing.text.DateFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,16 +56,47 @@ class FireStationServiceTest {
     private List<MedicalRecord> medicalRecordList;
     private List<Person> personList;
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
     @BeforeEach
     void setUp() throws JsonProcessingException {
+//        "fistNameA",
+//                "lastNameA",
+//                "address A",
+//                "cityA",
+//                "83000",
+//                "111-111-111",
+//                "email-a@test.com"
+        MedicalRecord medicalRecordA = new MedicalRecord(
+                "fistNameA",
+                "lastNameA",
+                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                List.of("paracetamol:500mg"),
+                List.of("peanuts")
+        );
 
-        MedicalRecord medicalRecord = new MedicalRecord();
+        MedicalRecord medicalRecordB = new MedicalRecord(
+                "fistNameB",
+                "lastNameB",
+                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                List.of("tramadol:2000mg"),
+                List.of("water")
+        );
+
+        MedicalRecord medicalRecordC = new MedicalRecord(
+                "fistNameC",
+                "lastNameC",
+                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                List.of(),
+                List.of()
+        );
 
         this.medicalRecordList = new ArrayList<>();
 
-        this.medicalRecordList.add(medicalRecord);
+        this.medicalRecordList.add(medicalRecordA);
+        this.medicalRecordList.add(medicalRecordB);
+        this.medicalRecordList.add(medicalRecordC);
 
-        this.medicalRecordList.add(medicalRecord);
 
         FireStation fireStationA = new FireStation(
                 "address A",
