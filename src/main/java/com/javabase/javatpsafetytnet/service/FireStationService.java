@@ -1,11 +1,14 @@
 package com.javabase.javatpsafetytnet.service;
 
 import com.javabase.javatpsafetytnet.model.FireStation;
+import com.javabase.javatpsafetytnet.model.MedicalRecord;
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class FireStationService {
 
+    private static final Logger log = LoggerFactory.getLogger(FireStationService.class);
     /**
      * Wired Repositories
      */
@@ -119,33 +123,47 @@ public class FireStationService {
 
                                         // MAPPING DATA TO DTO MODEL PersonContactMedicalHistoryDTO
                                         .map(mapperPerson ->
+                                                {
+                                                    try {
+                                                        List<MedicalRecord> medicalRecordList =
+                                                                medicalRecordRepository.findByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName());
 
-                                                new PersonContactMedicalHistoryDTO(
-                                                        mapperPerson.getLastName(),
-                                                        mapperPerson.getPhone(),
-                                                        // Find BirthDate and String AGE format
-                                                        String.format("%.0f",
-                                                                Person.getAge(medicalRecordRepository.findByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
+                                                        double ageOfPerson =
+                                                                Person.getAge(medicalRecordList
                                                                         .get(0)
-                                                                        .getBirthdate())
-                                                        ),
-                                                        // Find Medical Records
-                                                        medicalRecordRepository.findAllByIdentity(mapperPerson.getLastName(), mapperPerson.getFirstName())
-                                                                .stream()
+                                                                        .getBirthdate());
 
-                                                                // MAPPING DATA TO DTO MODEL MedicalHistoryDTO
-                                                                .map(mapperMedical ->
+                                                        return new PersonContactMedicalHistoryDTO(
+                                                                mapperPerson.getLastName(),
+                                                                mapperPerson.getPhone(),
+                                                                // Find BirthDate and String AGE format
+                                                                String.format("%.0f",
+                                                                        ageOfPerson
+                                                                ),
+                                                                // Find Medical Records
+                                                                medicalRecordList
+                                                                        .stream()
 
-                                                                        new MedicalHistoryDTO(
-                                                                                mapperMedical.getMedications(),
-                                                                                mapperMedical.getAllergies()
+                                                                        // MAPPING DATA TO DTO MODEL MedicalHistoryDTO
+                                                                        .map(mapperMedical ->
+
+                                                                                new MedicalHistoryDTO(
+                                                                                        mapperMedical.getMedications(),
+                                                                                        mapperMedical.getAllergies()
+                                                                                )
+
                                                                         )
+                                                                        // Collect Medical records
+                                                                        .collect(Collectors.toList())
+                                                        );
+                                                    }catch (IndexOutOfBoundsException e){
 
-                                                                )
-                                                                // Collect Medical records
-                                                                .collect(Collectors.toList())
-                                                )
+                                                        log.error("Error found data for person lastname : {}, : {}",
+                                                                mapperPerson.getLastName(), mapperPerson.getFirstName());
 
+                                                        return new PersonContactMedicalHistoryDTO();
+                                                    }
+                                            }
                                         )
                                         // COLLECT DATA PersonContactMedicalHistoryDTO
                                         .collect(Collectors.toList())

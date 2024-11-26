@@ -10,6 +10,10 @@ public class PersonContactMedicalHistoryDTO {
 
     private List<MedicalHistoryDTO> medicalHistoryList;
 
+    public PersonContactMedicalHistoryDTO() {
+
+    }
+
     /**
      * Constructor
      *
