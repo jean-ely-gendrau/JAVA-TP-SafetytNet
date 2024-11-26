@@ -11,6 +11,9 @@ import com.javabase.javatpsafetytnet.repository.DataRepository;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonContactMedicalHistoryDTO;
+import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
 import org.apache.catalina.core.ApplicationContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,10 +30,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,7 +70,7 @@ class FireStationServiceTest {
         MedicalRecord medicalRecordA = new MedicalRecord(
                 "fistNameA",
                 "lastNameA",
-                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                LocalDate.now().minusYears(18).format(formatter),
                 List.of("paracetamol:500mg"),
                 List.of("peanuts")
         );
@@ -78,7 +78,7 @@ class FireStationServiceTest {
         MedicalRecord medicalRecordB = new MedicalRecord(
                 "fistNameB",
                 "lastNameB",
-                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                LocalDate.now().minusYears(20).format(formatter),
                 List.of("tramadol:2000mg"),
                 List.of("water")
         );
@@ -86,7 +86,7 @@ class FireStationServiceTest {
         MedicalRecord medicalRecordC = new MedicalRecord(
                 "fistNameC",
                 "lastNameC",
-                LocalDate.parse(LocalDate.now().minusYears(18).toString(),formatter).toString(),
+                LocalDate.now().minusYears(8).format(formatter),
                 List.of(),
                 List.of()
         );
@@ -171,9 +171,9 @@ class FireStationServiceTest {
                 )
         );
 
-      when(
-              mockPersonRepository.findAll()
-      ).thenReturn(personList);
+        when(
+                mockPersonRepository.findAll()
+        ).thenReturn(personList);
 
 
         List<String> returned = fireStationService.getNumberPhoneByStation(stationNumber);
@@ -183,12 +183,62 @@ class FireStationServiceTest {
         assertEquals(
                 Arrays.asList("111-111-111", "222-222-222"),
                 returned
-                );
+        );
 
     }
 
     @Test
     void getAllPersonsByAddress() {
+        String address = "address B";
+
+        when(
+                mockFireStationRepository.findByAddress(anyString())
+        ).thenReturn(
+                Optional.ofNullable(fireStationList.get(1))
+        );
+
+        when(
+                mockPersonRepository.findAllByAddress(anyString())
+        ).thenReturn(
+                Collections.singletonList(personList.get(1))
+        );
+
+
+        when(
+                mockMedicalRecordRepository.findAllByIdentity(anyString(), anyString())
+        ).thenReturn(
+                Collections.singletonList(medicalRecordList.get(1))
+        );
+
+        List<PersonContactMedicalHistoryDTO> personContactMedicalHistoryDTOList = new ArrayList<>();
+
+
+        personContactMedicalHistoryDTOList.add(
+                new PersonContactMedicalHistoryDTO(
+                        personList.get(1).getLastName(),
+                        personList.get(1).getPhone(),
+                        String.format("%.0f", Person.getAge(medicalRecordList.get(1).getBirthdate())),
+                        List.of(
+                                new MedicalHistoryDTO(
+                                        medicalRecordList.get(1).getMedications(),
+                                        medicalRecordList.get(1).getAllergies()
+                                )
+                        )
+                )
+        );
+
+        PersonsByStationDTO personsByStationDTOExcepted = new PersonsByStationDTO(
+                "1",
+                address,
+                personContactMedicalHistoryDTOList
+        );
+
+        PersonsByStationDTO personsByStationDTO = fireStationService.getAllPersonsByAddress(address);
+
+        assertNotNull(personsByStationDTO);
+        assertEquals(personsByStationDTOExcepted.getPersonFireAlertList().get(0).getAge(), personsByStationDTO.getPersonFireAlertList().get(0).getAge());
+
+
     }
 
     @Test
