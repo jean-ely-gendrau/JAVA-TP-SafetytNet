@@ -68,7 +68,7 @@ class FireStationServiceTest {
 //                "111-111-111",
 //                "email-a@test.com"
         MedicalRecord medicalRecordA = new MedicalRecord(
-                "fistNameA",
+                "firstNameA",
                 "lastNameA",
                 LocalDate.now().minusYears(18).format(formatter),
                 List.of("paracetamol:500mg"),
@@ -76,7 +76,7 @@ class FireStationServiceTest {
         );
 
         MedicalRecord medicalRecordB = new MedicalRecord(
-                "fistNameB",
+                "firstNameB",
                 "lastNameB",
                 LocalDate.now().minusYears(20).format(formatter),
                 List.of("tramadol:2000mg"),
@@ -84,7 +84,7 @@ class FireStationServiceTest {
         );
 
         MedicalRecord medicalRecordC = new MedicalRecord(
-                "fistNameC",
+                "firstNameC",
                 "lastNameC",
                 LocalDate.now().minusYears(8).format(formatter),
                 List.of(),
@@ -120,7 +120,7 @@ class FireStationServiceTest {
         this.fireStationList.add(fireStationC);
 
         Person personA = new Person(
-                "fistNameA",
+                "firstNameA",
                 "lastNameA",
                 "address A",
                 "cityA",
@@ -130,7 +130,7 @@ class FireStationServiceTest {
         );
 
         Person personB = new Person(
-                "fistNameB",
+                "firstNameB",
                 "lastNameB",
                 "address B",
                 "cityB",
@@ -140,7 +140,7 @@ class FireStationServiceTest {
         );
 
         Person personC = new Person(
-                "fistNameC",
+                "firstNameC",
                 "lastNameC",
                 "address C",
                 "cityC",
@@ -238,11 +238,41 @@ class FireStationServiceTest {
         assertNotNull(personsByStationDTO);
         assertEquals(personsByStationDTOExcepted.getPersonFireAlertList().get(0).getAge(), personsByStationDTO.getPersonFireAlertList().get(0).getAge());
 
-
+        fireStationService.getAllPersonsByAddress(address);
     }
 
     @Test
     void getAllPersonsByStations() {
+        String address = "address C";
+        List<String> stationNumbers =new ArrayList<>();
+        stationNumbers.add("1");
+        stationNumbers.add("2");
+
+        when(
+                mockFireStationRepository.findAllByListStationNumber(
+                       anyList()
+                )
+        ).thenReturn(
+                        fireStationList
+        );
+
+        when(
+                mockPersonRepository.findAllByAddress(anyString())
+        ).thenReturn(
+                personList
+        );
+
+        when(
+                mockMedicalRecordRepository.findByIdentity(anyString(), anyString())
+        ).thenReturn(
+                medicalRecordList
+        );
+
+
+        List<PersonsByStationDTO> personsByStationDTOList = fireStationService.getAllPersonsByStations(stationNumbers);
+        assertNotNull(personsByStationDTOList);
+        assertEquals(personsByStationDTOList.size(), 3);
+        assertEquals(personsByStationDTOList.get(2).getAddress(), address);
     }
 
     @Test
