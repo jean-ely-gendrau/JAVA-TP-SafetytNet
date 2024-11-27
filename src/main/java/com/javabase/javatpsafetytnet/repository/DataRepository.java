@@ -49,4 +49,15 @@ public class DataRepository {
         this.data = data;
     }
 
+    // Method
+
+    /**
+     * addPersonToList
+     *
+     * @param person
+     */
+    public void addPersonToList(Person person){
+        data.getPersons().add(person);
+    }
+
 }

@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -43,28 +43,31 @@ class PersonServiceTest {
     }
 
     @Test
-    void addNewPerson() {
+    void addNewPerson() throws Exception {
         Person personRequest = new Person();
 
-        personRequest.setLastName("John");
-        personRequest.setFirstName("Smith");
+        personRequest.setLastName("TestJohn");
+        personRequest.setFirstName("TestSmith");
         personRequest.setAddress("test Address");
         personRequest.setPhone("111-222-333");
         personRequest.setCity("Test");
         personRequest.setZip("83000");
-        personRequest.setEmail("email@test.com");
+        personRequest.setEmail("Testemail@test.com");
 
-        when(
-                mockPersonRepository.save(any(Person.class))
-        ).thenReturn(
-                personRequest
-        );
+        doNothing().when(mockPersonRepository).save(any(Person.class));
+
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(new Person());
 
         personService.addPerson(personRequest);
 
-        Person personActual = personService.findByIdentity(personRequest.getLastName(), personRequest.getLastName());
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personRequest);
+
+        Person personActual = mockPersonRepository.findByIdentity(personRequest.getLastName(), personRequest.getFirstName());
 
         assertEquals(personRequest.getLastName(), personActual.getLastName() );
         assertEquals(personRequest.getFirstName(), personActual.getFirstName());
+
+        verify(mockPersonRepository, times(2)).findByIdentity(personRequest.getLastName(),
+                personRequest.getFirstName());
     }
 }

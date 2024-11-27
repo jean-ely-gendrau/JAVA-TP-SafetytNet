@@ -56,4 +56,10 @@ public class Data {
     public void setMedicalrecords(List<MedicalRecord> medicalrecords) {
         this.medicalrecords = medicalrecords;
     }
+
+    // Method
+
+    public void addPersonsToList(Person persons) {
+        this.persons.add(persons);
+    }
 }

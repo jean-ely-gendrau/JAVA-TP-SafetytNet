@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,7 +31,7 @@ public class PersonRepository {
      *
      * @return List Person
      */
-    public List<Person> findAll(){
+    public List<Person> findAll() {
         return dataRepository
                 .findAllPeron();
     }
@@ -45,9 +46,10 @@ public class PersonRepository {
         return dataRepository
                 .findAllPeron()
                 .stream()
-                .filter( person ->
+                .filter(person ->
                         Objects.equals(person.getCity(), city)
                 )
+
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +59,7 @@ public class PersonRepository {
      * @param address
      * @return List Person
      */
-    public List<Person> findAllByAddress(String address){
+    public List<Person> findAllByAddress(String address) {
         return dataRepository.findAllPeron()
                 .stream()
                 .filter(person -> Objects.equals(person.getAddress(), address))
@@ -71,10 +73,30 @@ public class PersonRepository {
      * @param firstName
      * @return List Person
      */
-    public List<Person> findAllByIdentity(String lastName, String firstName){
+    public List<Person> findAllByIdentity(String lastName, String firstName) {
         return dataRepository.findAllPeron()
                 .stream()
                 .filter(person -> Objects.equals(person.getFirstName(), firstName) || Objects.equals(person.getLastName(), lastName))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * findByIdentity
+     *
+     * @param lastName
+     * @param firstName
+     * @return Person
+     */
+    public Person findByIdentity(String lastName, String firstName) {
+        return dataRepository.findAllPeron()
+                .stream()
+                .filter(person ->
+                        Objects.equals(person.getLastName(), lastName) && Objects.equals(person.getFirstName(), firstName)
+                ).findFirst()
+                .orElse(new Person());
+    }
+
+    public void save(Person person) {
+       dataRepository.addPersonToList(person);
     }
 }

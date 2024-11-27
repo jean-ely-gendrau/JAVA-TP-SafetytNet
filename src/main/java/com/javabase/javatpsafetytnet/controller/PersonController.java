@@ -59,8 +59,8 @@ public class PersonController {
      * @param person
      * @return Person
      */
-    @PostMapping
-    public Person addNewPerson(@RequestBody Person person) {
+    @PostMapping("/addPerson")
+    public Person addNewPerson(@RequestBody Person person) throws Exception {
         return personService.addPerson(person);
     }
 }

@@ -6,14 +6,19 @@ import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
 import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
 
+    private static final Logger log = LoggerFactory.getLogger(PersonService.class);
     /**
      * Wired Repositories
      */
@@ -78,5 +83,26 @@ public class PersonService {
                 )
                 // Return Collect Data to PersonMedicalHistoryDTO
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * addPerson
+     *
+     * @param person
+     * @return Person
+     */
+    public Person addPerson(Person person) throws Exception {
+        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+
+        if (Objects.equals(personExist.getFirstName(), person.getFirstName()) &&
+                        Objects.equals(personExist.getLastName(), person.getLastName())
+        ) {
+            log.error("User exist verify your data {}", person);
+            throw new Exception("User exist verify your data");
+        }
+
+        personRepository.save(person);
+
+        return person;
     }
 }
