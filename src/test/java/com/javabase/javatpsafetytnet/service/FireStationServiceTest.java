@@ -11,6 +11,7 @@ import com.javabase.javatpsafetytnet.repository.DataRepository;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import com.javabase.javatpsafetytnet.service.dto.FireStationPersonDTO;
 import com.javabase.javatpsafetytnet.service.dto.MedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonContactMedicalHistoryDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
@@ -244,16 +245,14 @@ class FireStationServiceTest {
     @Test
     void getAllPersonsByStations() {
         String address = "address C";
-        List<String> stationNumbers =new ArrayList<>();
+        List<String> stationNumbers = new ArrayList<>();
         stationNumbers.add("1");
         stationNumbers.add("2");
 
         when(
-                mockFireStationRepository.findAllByListStationNumber(
-                       anyList()
-                )
+                mockFireStationRepository.findAllByListStationNumber(anyList())
         ).thenReturn(
-                        fireStationList
+                fireStationList
         );
 
         when(
@@ -277,5 +276,39 @@ class FireStationServiceTest {
 
     @Test
     void getAllPersonsByStation() {
+        String stationNumber = "2";
+
+        when(
+                mockFireStationRepository.findAllByStationNumber(stationNumber)
+        ).thenReturn(
+                List.of(
+                        fireStationList.get(2)
+                )
+        );
+
+        when(
+                mockPersonRepository.findAllByAddress(anyString())
+        ).thenReturn(
+                List.of(
+                        personList.get(2)
+                )
+        );
+
+        when(
+                mockMedicalRecordRepository.findByIdentity(anyString(), anyString())
+        ).thenReturn(
+                List.of(
+                        medicalRecordList.get(2)
+                )
+        );
+
+        List<FireStationPersonDTO> fireStationPersonDTOList =
+                fireStationService.getAllPersonsByStation(stationNumber);
+
+        assertNotNull(fireStationPersonDTOList);
+        assertEquals(1, fireStationPersonDTOList.size());
+        assertEquals(1, fireStationPersonDTOList.get(0).getPersonMinor());
+        assertEquals("lastNameC", fireStationPersonDTOList.get(0).getPersonContactList().get(0).getLastName());
+
     }
 }
