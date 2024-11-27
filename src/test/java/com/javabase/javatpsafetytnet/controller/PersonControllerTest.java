@@ -11,9 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,5 +67,16 @@ class PersonControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/personInfo?lastName=" + anyString() + "&firstName=" + anyString()))
                 .andExpect(status().isOk()
                 );
+    }
+
+    @Test
+    void addNewPerson() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/addPerson")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(anyString())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
     }
 }
