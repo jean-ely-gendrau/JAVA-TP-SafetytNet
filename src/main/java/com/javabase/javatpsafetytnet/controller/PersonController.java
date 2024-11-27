@@ -1,10 +1,9 @@
 package com.javabase.javatpsafetytnet.controller;
 
+import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.service.PersonService;
 import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,5 +51,16 @@ public class PersonController {
             @RequestParam(name = "firstName") String firstName
     ) {
         return personService.findPersonInfo(lastName, firstName);
+    }
+
+    /**
+     * addNewPerson
+     *
+     * @param person
+     * @return Person
+     */
+    @PostMapping
+    public Person addNewPerson(@RequestBody Person person) {
+        return personService.addPerson(person);
     }
 }
