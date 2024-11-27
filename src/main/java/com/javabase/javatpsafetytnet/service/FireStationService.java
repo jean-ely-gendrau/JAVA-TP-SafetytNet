@@ -204,22 +204,6 @@ public class FireStationService {
                                         )
                                         .count();
 
-//                                // COUNT MINOR
-//                                long countMinor = personList
-//                                        .stream()
-//                                        .filter(person -> {
-//
-//                                                    String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
-//                                                            .get(0)
-//                                                            .getBirthdate();
-//
-//                                                    return !Person.isAdult(birthDate);
-//
-//                                                }
-//                                        )
-//                                        .count();
-
-
                                 return new FireStationPersonDTO(
                                         mapper.getStation(),
                                         personList
@@ -244,8 +228,6 @@ public class FireStationService {
                                         personList.size() - countMajor
 
                                 );
-
-
                             }
 
                     )
@@ -253,8 +235,7 @@ public class FireStationService {
                     .collect(Collectors.toList());
 
         } catch (IndexOutOfBoundsException e) {
-            log.error("Error found data for station number {}",
-                    stationNumber);
+            log.error("Error found data for station number {}", stationNumber);
             return List.of(new FireStationPersonDTO());
         }
     }
