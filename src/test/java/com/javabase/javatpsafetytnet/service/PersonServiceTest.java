@@ -30,8 +30,21 @@ class PersonServiceTest {
     @InjectMocks
     PersonService personService;
 
+    private Person personTestAdd;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        personTestAdd = new Person();
+
+        personTestAdd.setLastName("TestJohn");
+        personTestAdd.setFirstName("TestSmith");
+        personTestAdd.setAddress("test Address");
+        personTestAdd.setPhone("111-222-333");
+        personTestAdd.setCity("Test");
+        personTestAdd.setZip("83000");
+        personTestAdd.setEmail("Testemail@test.com");
+
+
     }
 
     @Test
@@ -44,30 +57,22 @@ class PersonServiceTest {
 
     @Test
     void addNewPerson() throws Exception {
-        Person personRequest = new Person();
-
-        personRequest.setLastName("TestJohn");
-        personRequest.setFirstName("TestSmith");
-        personRequest.setAddress("test Address");
-        personRequest.setPhone("111-222-333");
-        personRequest.setCity("Test");
-        personRequest.setZip("83000");
-        personRequest.setEmail("Testemail@test.com");
-
         doNothing().when(mockPersonRepository).save(any(Person.class));
 
         when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(new Person());
 
-        personService.addPerson(personRequest);
+        personService.addPerson(personTestAdd);
 
-        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personRequest);
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
 
-        Person personActual = mockPersonRepository.findByIdentity(personRequest.getLastName(), personRequest.getFirstName());
+        Person personActual = mockPersonRepository.findByIdentity(personTestAdd.getLastName(), personTestAdd.getFirstName());
 
-        assertEquals(personRequest.getLastName(), personActual.getLastName() );
-        assertEquals(personRequest.getFirstName(), personActual.getFirstName());
 
-        verify(mockPersonRepository, times(2)).findByIdentity(personRequest.getLastName(),
-                personRequest.getFirstName());
+        assertEquals(personTestAdd.getLastName(), personActual.getLastName() );
+        assertEquals(personTestAdd.getFirstName(), personActual.getFirstName());
+
+
+        verify(mockPersonRepository, times(2)).findByIdentity(personTestAdd.getLastName(),
+                personTestAdd.getFirstName());
     }
 }
