@@ -12,6 +12,13 @@ public class FireStationPersonDTO {
     private long personMinor;
 
     /**
+     * Constructor per default
+     */
+    public FireStationPersonDTO() {
+
+    }
+
+    /**
      * Constructor
      *
      * @param firestation

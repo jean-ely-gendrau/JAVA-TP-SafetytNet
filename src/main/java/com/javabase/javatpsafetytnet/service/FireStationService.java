@@ -156,14 +156,14 @@ public class FireStationService {
                                                                         // Collect Medical records
                                                                         .collect(Collectors.toList())
                                                         );
-                                                    }catch (IndexOutOfBoundsException e){
+                                                    } catch (IndexOutOfBoundsException e) {
 
                                                         log.error("Error found data for person lastname : {}, : {}",
                                                                 mapperPerson.getLastName(), mapperPerson.getFirstName());
 
                                                         return new PersonContactMedicalHistoryDTO();
                                                     }
-                                            }
+                                                }
                                         )
                                         // COLLECT DATA PersonContactMedicalHistoryDTO
                                         .collect(Collectors.toList())
@@ -181,34 +181,17 @@ public class FireStationService {
      * @return
      */
     public List<FireStationPersonDTO> getAllPersonsByStation(String stationNumber) {
-        return fireStationRepository.findAllByStationNumber(stationNumber)
-                .stream()
+        try {
 
-                // MAPPING DATA TO DTO MODEL FireStationPersonDTO
-                .map(mapper ->
+            return fireStationRepository.findAllByStationNumber(stationNumber)
+                    .stream()
 
-                        new FireStationPersonDTO(
-                                mapper.getStation(),
-                                personRepository.findAllByAddress(mapper.getAddress())
-                                        .stream()
+                    // MAPPING DATA TO DTO MODEL FireStationPersonDTO
+                    .map(mapper -> {
 
-                                        // MAPPING DATA TO DTO MODEL PersonContactDTO
-                                        .map(person ->
-
-                                                new PersonContactDTO(
-                                                        person.getFirstName(),
-                                                        person.getLastName(),
-                                                        person.getAddress(),
-                                                        person.getPhone()
-                                                )
-
-                                        )
-                                        // COLLETE DATA to DTO PersonContactDTO
-                                        .collect(Collectors.toList()),
-
+                                List<Person> personList = personRepository.findAllByAddress(mapper.getAddress());
                                 // COUNT MAJOR
-                                personRepository.findAllByAddress(mapper.getAddress())
-                                        .stream()
+                                long countMajor = personList.stream()
                                         .filter(person -> {
 
                                                     String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
@@ -219,26 +202,60 @@ public class FireStationService {
 
                                                 }
                                         )
-                                        .count(),
+                                        .count();
 
-                                // COUNT MINOR
-                                personRepository.findAllByAddress(mapper.getAddress())
-                                        .stream()
-                                        .filter(person -> {
+//                                // COUNT MINOR
+//                                long countMinor = personList
+//                                        .stream()
+//                                        .filter(person -> {
+//
+//                                                    String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
+//                                                            .get(0)
+//                                                            .getBirthdate();
+//
+//                                                    return !Person.isAdult(birthDate);
+//
+//                                                }
+//                                        )
+//                                        .count();
 
-                                                    String birthDate = medicalRecordRepository.findByIdentity(person.getLastName(), person.getFirstName())
-                                                            .get(0)
-                                                            .getBirthdate();
 
-                                                    return !Person.isAdult(birthDate);
+                                return new FireStationPersonDTO(
+                                        mapper.getStation(),
+                                        personList
+                                                .stream()
 
-                                                }
-                                        )
-                                        .count()
-                        )
+                                                // MAPPING DATA TO DTO MODEL PersonContactDTO
+                                                .map(person ->
 
-                )
-                // RETURN COLLETE DATA
-                .collect(Collectors.toList());
+                                                        new PersonContactDTO(
+                                                                person.getFirstName(),
+                                                                person.getLastName(),
+                                                                person.getAddress(),
+                                                                person.getPhone()
+                                                        )
+
+                                                )
+                                                // COLLETE DATA to DTO PersonContactDTO
+                                                .collect(Collectors.toList()),
+
+
+                                        countMajor,
+                                        personList.size() - countMajor
+
+                                );
+
+
+                            }
+
+                    )
+                    // RETURN COLLETE DATA
+                    .collect(Collectors.toList());
+
+        } catch (IndexOutOfBoundsException e) {
+            log.error("Error found data for station number {}",
+                    stationNumber);
+            return List.of(new FireStationPersonDTO());
+        }
     }
 }
