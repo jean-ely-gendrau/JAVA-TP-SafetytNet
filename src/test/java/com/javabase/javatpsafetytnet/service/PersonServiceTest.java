@@ -67,12 +67,42 @@ class PersonServiceTest {
 
         Person personActual = mockPersonRepository.findByIdentity(personTestAdd.getLastName(), personTestAdd.getFirstName());
 
-
-        assertEquals(personTestAdd.getLastName(), personActual.getLastName() );
+        assertNotNull(personActual);
+        assertEquals(personTestAdd.getLastName(), personActual.getLastName());
         assertEquals(personTestAdd.getFirstName(), personActual.getFirstName());
-
 
         verify(mockPersonRepository, times(2)).findByIdentity(personTestAdd.getLastName(),
                 personTestAdd.getFirstName());
     }
+
+    @Test
+    void updatePerson() throws Exception {
+        doNothing().when(mockPersonRepository).save(any(Person.class));
+
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
+
+        Person personUpdate = personService.updatePerson(personTestAdd);
+
+        assertNotNull(personUpdate);
+
+        assertEquals(personTestAdd.getLastName(), personUpdate.getLastName());
+        assertEquals(personTestAdd.getFirstName(), personUpdate.getFirstName());
+    }
+
+    @Test
+    void deletePerson() throws Exception {
+        doNothing().when(mockPersonRepository).delete(anyString(), anyString());
+
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
+
+        String firstName = personTestAdd.getFirstName();
+        String lastName = personTestAdd.getLastName();
+
+        personService.delete(lastName, firstName);
+
+        Person person = mockPersonRepository.findByIdentity(lastName, firstName);
+
+        assertNull(person);
+    }
+
 }
