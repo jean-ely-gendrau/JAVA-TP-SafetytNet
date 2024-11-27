@@ -58,9 +58,40 @@ public class PersonController {
      *
      * @param person
      * @return Person
+     * @throws Exception
      */
     @PostMapping("/addPerson")
-    public Person addNewPerson(@RequestBody Person person) throws Exception {
+    public Person addNewPerson(
+            @RequestBody Person person
+    ) throws Exception {
+
         return personService.addPerson(person);
+
+    }
+
+    @PutMapping("/updatePerson")
+    public Person updatePerson(
+            @RequestBody Person person
+    ) throws Exception {
+
+        return  personService.updatePerson(person);
+
+    }
+
+    /**
+     * deletePerson
+     *
+     * @param lastName
+     * @param firstName
+     * @return Person
+     * @throws Exception
+     */
+    @DeleteMapping("/deletePerson")
+    public Person deletePerson(@RequestParam String lastName,
+                               @RequestParam String firstName
+    ) throws Exception {
+
+        return personService.deletePerson(lastName, firstName);
+
     }
 }
