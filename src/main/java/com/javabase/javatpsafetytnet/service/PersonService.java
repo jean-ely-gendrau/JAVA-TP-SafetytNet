@@ -105,4 +105,42 @@ public class PersonService {
 
         return person;
     }
+
+    /**
+     * updatePerson
+     *
+     * @param person
+     * @return
+     * @throws Exception
+     */
+    public Person updatePerson(Person person) throws Exception {
+        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+
+        if(!Objects.equals(personExist.getFirstName(), person.getFirstName())){
+           throw new Exception("Person does not exist");
+        }
+
+         personRepository.save(person);
+
+        return person;
+    }
+
+    /**
+     * deletePerson
+     *
+     * @param person
+     * @return
+     * @throws Exception
+     */
+    public  Person deletePerson(Person person) throws Exception {
+        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+
+        if(!Objects.equals(personExist.getFirstName(), person.getFirstName())){
+            throw new Exception("Person does not exist");
+        }
+
+        personRepository.delete(person);
+
+        return person;
+    }
 }
