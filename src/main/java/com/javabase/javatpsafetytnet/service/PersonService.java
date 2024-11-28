@@ -92,10 +92,11 @@ public class PersonService {
      * @return Person
      */
     public Person addPerson(Person person) throws Exception {
-        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+        Optional<Person> personExist = Optional.ofNullable(personRepository.findByIdentity(person.getLastName(),
+                person.getFirstName()));
 
-        if (Objects.equals(personExist.getFirstName(), person.getFirstName()) &&
-                        Objects.equals(personExist.getLastName(), person.getLastName())
+        if (personExist.isPresent() && Objects.equals(personExist.get().getFirstName(), person.getFirstName()) &&
+                        Objects.equals(personExist.get().getLastName(), person.getLastName())
         ) {
             log.error("User exist verify your data {}", person);
             throw new Exception("User exist verify your data");
@@ -114,15 +115,16 @@ public class PersonService {
      * @throws Exception
      */
     public Person updatePerson(Person person) throws Exception {
-        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+        Optional<Person> personExist = Optional.ofNullable(personRepository.findByIdentity(person.getLastName(),
+                person.getFirstName()));
 
-        if(!Objects.equals(personExist.getFirstName(), person.getFirstName())){
+        if(personExist.isPresent() &&!Objects.equals(personExist.get().getFirstName(), person.getFirstName())){
            throw new Exception("Person does not exist");
         }
 
-         personRepository.save(person);
+         personRepository.update(person);
 
-        return person;
+        return  personRepository.findByIdentity(person.getLastName(), person.getFirstName());
     }
 
     /**
@@ -134,9 +136,9 @@ public class PersonService {
      * @throws Exception
      */
     public  String deletePerson(String lastName, String firstName) throws Exception {
-        Person personExist = personRepository.findByIdentity(lastName, firstName);
+        Optional<Person> personExist = Optional.ofNullable(personRepository.findByIdentity(lastName, firstName));
 
-        if(!Objects.equals(personExist.getFirstName(), firstName)){
+        if(personExist.isPresent() && !Objects.equals(personExist.get().getFirstName(), firstName)){
             throw new Exception("Person does not exist");
         }
 

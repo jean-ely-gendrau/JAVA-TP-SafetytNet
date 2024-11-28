@@ -1,12 +1,12 @@
 package com.javabase.javatpsafetytnet.controller;
 
+
 import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.service.PersonService;
 import com.javabase.javatpsafetytnet.service.dto.PersonMedicalHistoryDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class PersonController {
@@ -69,6 +69,13 @@ public class PersonController {
 
     }
 
+    /**
+     * updatePerson
+     *
+     * @param person
+     * @return Person
+     * @throws Exception
+     */
     @PutMapping("/updatePerson")
     public Person updatePerson(
             @RequestBody Person person
@@ -83,7 +90,7 @@ public class PersonController {
      *
      * @param lastName
      * @param firstName
-     * @return Person
+     * @return String
      * @throws Exception
      */
     @DeleteMapping("/deletePerson")

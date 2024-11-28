@@ -1,9 +1,12 @@
 package com.javabase.javatpsafetytnet.service;
 
+import com.javabase.javatpsafetytnet.model.Data;
 import com.javabase.javatpsafetytnet.model.Person;
+import com.javabase.javatpsafetytnet.repository.DataRepository;
 import com.javabase.javatpsafetytnet.repository.FireStationRepository;
 import com.javabase.javatpsafetytnet.repository.MedicalRecordRepository;
 import com.javabase.javatpsafetytnet.repository.PersonRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,12 +14,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
+
+    @Mock
+    Data mockData;
+
+    @Mock
+    DataRepository mockDataRepository;
 
     @Mock
     PersonRepository mockPersonRepository;
@@ -33,18 +44,29 @@ class PersonServiceTest {
     private Person personTestAdd;
 
     @BeforeEach
-    void setUp() throws Exception {
-        personTestAdd = new Person();
+    public void setUp() throws Exception {
+        this.personTestAdd = new Person();
 
-        personTestAdd.setLastName("TestJohn");
-        personTestAdd.setFirstName("TestSmith");
-        personTestAdd.setAddress("test Address");
-        personTestAdd.setPhone("111-222-333");
-        personTestAdd.setCity("Test");
-        personTestAdd.setZip("83000");
-        personTestAdd.setEmail("Testemail@test.com");
+        this.personTestAdd.setLastName("TestJohn");
+        this.personTestAdd.setFirstName("TestSmith");
+        this.personTestAdd.setAddress("test Address");
+        this.personTestAdd.setPhone("111-222-333");
+        this.personTestAdd.setCity("Test");
+        this.personTestAdd.setZip("83000");
+        this.personTestAdd.setEmail("Testemail@test.com");
 
 
+
+        doNothing().when(mockPersonRepository).save(any(Person.class));
+        doNothing().when(mockDataRepository).addPersonToList(personTestAdd);
+        when(mockData.getPersons().add(personTestAdd)).thenReturn(true);
+
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(new Person());
+
+        personService.addPerson(personTestAdd);
+
+        verify(mockPersonRepository,times(1)).save(personTestAdd);
+        verify(mockDataRepository, times(2)).addPersonToList(personTestAdd);
     }
 
     @Test
@@ -57,36 +79,69 @@ class PersonServiceTest {
 
     @Test
     void addNewPerson() throws Exception {
-        doNothing().when(mockPersonRepository).save(any(Person.class));
+        Person addPersonNew = new Person();
+
+        addPersonNew.setLastName("TestJohn2");
+        addPersonNew.setFirstName("TestSmith2");
+        addPersonNew.setAddress("test Address2");
+        addPersonNew.setPhone("888-777-666");
+        addPersonNew.setCity("Test2");
+        addPersonNew.setZip("75000");
+        addPersonNew.setEmail("Testemail2@test.com");
 
         when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(new Person());
 
-        personService.addPerson(personTestAdd);
+        doNothing().when(mockPersonRepository).save(any(Person.class));
+        doNothing().when(mockDataRepository).addPersonToList(any(Person.class));
 
-        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
+        when(mockData.getPersons().add(any(Person.class))).thenReturn(true);
 
-        Person personActual = mockPersonRepository.findByIdentity(personTestAdd.getLastName(), personTestAdd.getFirstName());
+
+        personService.addPerson(addPersonNew);
+
+        when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(addPersonNew);
+
+        Person personActual = mockPersonRepository.findByIdentity(addPersonNew.getLastName(), addPersonNew.getFirstName());
 
         assertNotNull(personActual);
-        assertEquals(personTestAdd.getLastName(), personActual.getLastName());
-        assertEquals(personTestAdd.getFirstName(), personActual.getFirstName());
+        assertEquals(addPersonNew.getLastName(), personActual.getLastName());
+        assertEquals(addPersonNew.getFirstName(), personActual.getFirstName());
 
-        verify(mockPersonRepository, times(2)).findByIdentity(personTestAdd.getLastName(),
-                personTestAdd.getFirstName());
+        verify(mockDataRepository, times(1)).addPersonToList(addPersonNew);
+        verify(mockPersonRepository, times(1)).save(addPersonNew);
+
     }
 
     @Test
     void updatePerson() throws Exception {
-        doNothing().when(mockPersonRepository).save(any(Person.class));
+        Person personToUpdate = new Person();
 
+        personToUpdate.setLastName(personTestAdd.getLastName());
+        personToUpdate.setFirstName(personTestAdd.getFirstName());
+
+        personToUpdate.setAddress("Test Update");
+        personToUpdate.setPhone("999-999-999");
+
+        doNothing().when(mockDataRepository).updatePersonToList(any(Person.class));
+        doNothing().when(mockPersonRepository).update(any(Person.class));
+
+        when(mockData.getPersons()).thenReturn(Collections.singletonList(any(Person.class)));
         when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
 
-        Person personUpdate = personService.updatePerson(personTestAdd);
 
-        assertNotNull(personUpdate);
+        Person personActual = personService.updatePerson(personToUpdate);
 
-        assertEquals(personTestAdd.getLastName(), personUpdate.getLastName());
-        assertEquals(personTestAdd.getFirstName(), personUpdate.getFirstName());
+        assertNotNull(personActual);
+
+        assertEquals(personToUpdate.getLastName(), personActual.getLastName());
+        assertEquals(personToUpdate.getFirstName(), personActual.getFirstName());
+
+        verify(mockDataRepository, times(1)).updatePersonToList(personToUpdate);
+        verify(mockPersonRepository, times(1)).update(personToUpdate);
+
+
+        assertEquals("Test Update", personToUpdate.getAddress());
+        assertEquals("999-999-999", personToUpdate.getPhone());
     }
 
     @Test
@@ -94,6 +149,10 @@ class PersonServiceTest {
         doNothing().when(mockPersonRepository).delete(anyString(), anyString());
 
         when(mockPersonRepository.findByIdentity(anyString(), anyString())).thenReturn(personTestAdd);
+        when(mockData.getPersons()).thenReturn(Collections.singletonList(any(Person.class)));
+
+        doNothing().when(mockData).setPersons(Collections.singletonList(any(Person.class)));
+        doNothing().when(mockPersonRepository).delete(anyString(), anyString());
 
         String firstName = personTestAdd.getFirstName();
         String lastName = personTestAdd.getLastName();
@@ -104,6 +163,8 @@ class PersonServiceTest {
 
         assertNull(person);
         assertEquals(lastName + ", " + firstName, deletePerson);
+
+        verify(mockPersonRepository, times(1)).findByIdentity(lastName, firstName);
     }
 
 }
