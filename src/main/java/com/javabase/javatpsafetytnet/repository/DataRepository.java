@@ -95,7 +95,8 @@ public class DataRepository {
      * @return boolean
      */
     public void deletePersonToList(String lastName, String firstName) {
-      data.setPersons(data.getPersons()
+      data.setPersons(
+              data.getPersons()
                 .stream()
                 .dropWhile(personList ->
                         Objects.equals(personList.getLastName(), lastName) && Objects.equals(personList.getFirstName(),

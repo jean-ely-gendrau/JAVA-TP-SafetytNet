@@ -128,19 +128,20 @@ public class PersonService {
     /**
      * deletePerson
      *
-     * @param person
-     * @return
+     * @param lastName
+     * @param firstName
+     * @return boolean
      * @throws Exception
      */
-    public  Person deletePerson(Person person) throws Exception {
-        Person personExist = personRepository.findByIdentity(person.getLastName(), person.getFirstName());
+    public  String deletePerson(String lastName, String firstName) throws Exception {
+        Person personExist = personRepository.findByIdentity(lastName, firstName);
 
-        if(!Objects.equals(personExist.getFirstName(), person.getFirstName())){
+        if(!Objects.equals(personExist.getFirstName(), firstName)){
             throw new Exception("Person does not exist");
         }
 
-        personRepository.delete(person);
+        personRepository.delete(lastName, firstName);
 
-        return person;
+        return lastName + ", " + firstName + " as removed";
     }
 }

@@ -87,7 +87,7 @@ public class PersonController {
      * @throws Exception
      */
     @DeleteMapping("/deletePerson")
-    public Person deletePerson(@RequestParam String lastName,
+    public String deletePerson(@RequestParam String lastName,
                                @RequestParam String firstName
     ) throws Exception {
 

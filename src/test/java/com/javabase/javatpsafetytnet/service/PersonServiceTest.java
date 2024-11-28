@@ -98,11 +98,12 @@ class PersonServiceTest {
         String firstName = personTestAdd.getFirstName();
         String lastName = personTestAdd.getLastName();
 
-        personService.delete(lastName, firstName);
+        String deletePerson = personService.deletePerson(lastName, firstName);
 
         Person person = mockPersonRepository.findByIdentity(lastName, firstName);
 
         assertNull(person);
+        assertEquals(lastName + ", " + firstName, deletePerson);
     }
 
 }
