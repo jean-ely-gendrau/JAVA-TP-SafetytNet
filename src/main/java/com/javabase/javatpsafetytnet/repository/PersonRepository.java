@@ -122,7 +122,7 @@ public class PersonRepository {
      * @param firstName
      * @param person
      */
-    public void delete(String lastName, String firstName, Person person) {
-        dataRepository.deletePersonToList(person);
+    public void delete(String lastName, String firstName) {
+        dataRepository.deletePersonToList(lastName, firstName);
     }
 }

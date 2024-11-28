@@ -7,6 +7,7 @@ import com.javabase.javatpsafetytnet.model.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
@@ -84,5 +85,22 @@ public class DataRepository {
             throw new IndexOutOfBoundsException("Not user to update person: " + person.getFirstName() + " " + person.getLastName());
 
         }
+    }
+
+    /**
+     * deletePersonToList
+     *
+     * @param lastName
+     * @param firstName
+     * @return boolean
+     */
+    public void deletePersonToList(String lastName, String firstName) {
+      data.setPersons(data.getPersons()
+                .stream()
+                .dropWhile(personList ->
+                        Objects.equals(personList.getLastName(), lastName) && Objects.equals(personList.getFirstName(),
+                                firstName)
+                ).collect(Collectors.toList())
+      );
     }
 }
