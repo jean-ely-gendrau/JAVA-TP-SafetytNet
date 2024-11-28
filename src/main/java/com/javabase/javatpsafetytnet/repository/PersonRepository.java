@@ -96,7 +96,33 @@ public class PersonRepository {
                 .orElse(new Person());
     }
 
+    /**
+     * save
+     *
+     * @param person
+     */
     public void save(Person person) {
        dataRepository.addPersonToList(person);
+    }
+
+    /**
+     * update
+     *
+     * @param person
+     */
+    public void update(Person person) {
+        dataRepository.updatePersonToList(person);
+    }
+
+
+    /**
+     * update
+     *
+     * @param lastName
+     * @param firstName
+     * @param person
+     */
+    public void delete(String lastName, String firstName, Person person) {
+        dataRepository.deletePersonToList(person);
     }
 }
