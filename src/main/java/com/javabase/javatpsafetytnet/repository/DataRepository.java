@@ -7,6 +7,7 @@ import com.javabase.javatpsafetytnet.model.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DataRepository {
@@ -18,15 +19,14 @@ public class DataRepository {
      *
      * @return List Person
      */
-    public List<Person> findAllPeron(){
+    public List<Person> findAllPeron() {
         return data.getPersons();
     }
 
     /**
-     *
      * @return List FireStation
      */
-    public List<FireStation> findAllFireStation(){
+    public List<FireStation> findAllFireStation() {
         return data.getFirestations();
     }
 
@@ -35,7 +35,7 @@ public class DataRepository {
      *
      * @return List MedicalRecord
      */
-    public List<MedicalRecord> findAllMedicalRecord(){
+    public List<MedicalRecord> findAllMedicalRecord() {
         return data.getMedicalrecords();
     }
 
@@ -56,8 +56,33 @@ public class DataRepository {
      *
      * @param person
      */
-    public void addPersonToList(Person person){
+    public void addPersonToList(Person person) {
         data.getPersons().add(person);
     }
 
+    /**
+     * updatePersonToList
+     *
+     * @param person
+     */
+    public void updatePersonToList(Person person) {
+        try {
+            Person personToUpdate = data.getPersons()
+                    .stream()
+                    .filter(personList -> personList.getFirstName().equals(person.getFirstName())
+                            && personList.getLastName().equals(person.getLastName())
+                    ).toList().get(0);
+
+            personToUpdate.setAddress(person.getAddress());
+            personToUpdate.setCity(person.getCity());
+            personToUpdate.setZip(person.getZip());
+            personToUpdate.setPhone(person.getPhone());
+            personToUpdate.setEmail(person.getEmail());
+
+        } catch (IndexOutOfBoundsException e) {
+
+            throw new IndexOutOfBoundsException("Not user to update person: " + person.getFirstName() + " " + person.getLastName());
+
+        }
+    }
 }
