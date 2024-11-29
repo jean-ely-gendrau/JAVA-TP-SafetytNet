@@ -1,11 +1,11 @@
 package com.javabase.javatpsafetytnet.controller;
 
+import com.javabase.javatpsafetytnet.model.FireStation;
+import com.javabase.javatpsafetytnet.model.Person;
 import com.javabase.javatpsafetytnet.service.FireStationService;
 import com.javabase.javatpsafetytnet.service.dto.FireStationPersonDTO;
 import com.javabase.javatpsafetytnet.service.dto.PersonsByStationDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -69,6 +69,57 @@ public class FireStationController {
     @GetMapping("/firestation")
     public List<FireStationPersonDTO> fireStation(@RequestParam(name = "stationNumber") String stationNumber){
         return fireStationService.getAllPersonsByStation(stationNumber);
+    }
+
+    /* CRUD */
+
+    /**
+     * addNewFirestation
+     *
+     * @param firestation
+     * @return Firestation
+     * @throws Exception
+     */
+    @PostMapping("/addFirestation")
+    public Person addNewFirestation(
+            @RequestBody FireStation firestation
+    ) throws Exception {
+
+        return fireStationService.addFirestation(firestation);
+
+    }
+
+    /**
+     * updateFirestation
+     *
+     * @param firestation
+     * @return Firestation
+     * @throws Exception
+     */
+    @PutMapping("/updateFirestation")
+    public Person updateFirestation(
+            @RequestBody FireStation firestation
+    ) throws Exception {
+
+        return  fireStationService.updateFirestation(firestation);
+
+    }
+
+    /**
+     * deleteFirestation
+     *
+     * @param stationNumber
+     * @param address
+     * @return String
+     * @throws Exception
+     */
+    @DeleteMapping("/deleteFirestation")
+    public String deleteFirestation(@RequestParam String stationNumber,
+                               @RequestParam String address
+    ) throws Exception {
+
+        return fireStationService.deleteFirestation(stationNumber, address);
+
     }
 
 }
