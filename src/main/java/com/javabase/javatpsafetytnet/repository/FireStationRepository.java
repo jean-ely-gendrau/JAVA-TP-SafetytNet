@@ -91,4 +91,12 @@ public class FireStationRepository {
                 .filter(station -> stationsNumber.contains(station.getStation()))
                 .collect(Collectors.toList());
     }
+
+    public Optional<FireStation> findStationByNumberWhereAddress(String stationNumber, String address){
+        return dataRepository
+                .findAllFireStation()
+                .stream()
+                .filter(station -> station.getStation().equals(stationNumber) && station.getAddress().equals(address))
+                .findFirst();
+    }
 }

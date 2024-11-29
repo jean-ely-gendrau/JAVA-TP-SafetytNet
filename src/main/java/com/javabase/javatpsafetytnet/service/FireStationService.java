@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -238,5 +239,85 @@ public class FireStationService {
             log.error("Error found data for station number {}", stationNumber);
             return List.of(new FireStationPersonDTO());
         }
+    }
+
+    /* CRUD */
+    /**
+     * addFirestation
+     *
+     * @param firestation
+     * @return Firestation
+     */
+    public FireStation addFirestation(FireStation firestation) throws Exception {
+        Optional<FireStation> fireStationExist =
+                fireStationRepository.findStationByNumberWhereAddress(firestation.getStation(), firestation.getAddress());
+
+        if (fireStationExist.isPresent()) {
+            log.error("Firestation exist verify your data {}", firestation.getAddress());
+            throw new Exception("Firestation exist verify your data " + firestation.getAddress());
+        }
+
+        fireStationRepository.save(firestation);
+
+        return firestation;
+    }
+
+    /**
+     * updateFirestation
+     *
+     * @param stationNumber
+     * @param address
+     * @return FireStation
+     * @throws Exception
+     */
+    public FireStation updateFirestation(String stationNumber, String address) throws Exception {
+        Optional<FireStation> fireStationExist =
+                fireStationRepository.findStationByNumberWhereAddress(stationNumber, address);
+
+        if (fireStationExist.isEmpty()) {
+            log.error("FireStation exist verify your data {}", address);
+            throw new Exception("FireStation exist verify your data " + address);
+        }
+
+        return fireStationRepository.update(stationNumber, address);
+    }
+
+    /**
+     * deleteFirestation
+     *r
+     * @param address
+     * @return boolean
+     * @throws Exception
+     */
+    public  String deleteFirestationByAddress(String address) throws Exception {
+        Optional<FireStation> fireStationExist =
+                fireStationRepository.findByAddress(address);
+
+        if(fireStationExist.isEmpty()){
+            throw new Exception("Firestation does not exist");
+        }
+
+        fireStationRepository.deleteByAdress(address);
+
+        return "FireStation N°: " + fireStationExist.get().getStation() + ", with address: " +fireStationExist.get().getAddress() +
+                " as removed";
+    }
+
+    /**
+     * deleteFirestation
+     *r
+     * @param stationNumber
+     * @return String
+     * @throws Exception
+     */
+    public  List<FireStation> deleteFirestationAllByStatioNumber(String stationNumber) throws Exception {
+        List<FireStation> fireStationsExist =
+                fireStationRepository.findAllByStationNumber(stationNumber);
+
+        if(fireStationsExist.isEmpty()){
+            throw new Exception("Firestation does not exist with " + stationNumber);
+        }
+
+        return fireStationRepository.deleteAllByStation(stationNumber);
     }
 }
